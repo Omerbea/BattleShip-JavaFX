@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -23,7 +24,15 @@ public class Controller extends Application  {
     @FXML
     Pane mainPane;
     GameManager battleShipGame = new GameManager();
+    @FXML Button exitGameBtn;
 
+    @FXML Button restartGameBtn;
+    @FXML
+    public Button closeButton;
+    @FXML
+    public Button loadFileBtn;
+    @FXML
+    public Button startGameBtn;
     @FXML
     Button startGame;
     Label gameLoadedLabel;
@@ -33,11 +42,21 @@ public class Controller extends Application  {
         launch(args);
     }
 
+    @FXML
+    public void restartGameHandler(){
+        battleShipGame.restartGame();
+    }
+
+    @FXML
+    public void exitGameHandler(){
+        // TODO: exit : close/hide and close everthing
+    }
+
     @Override
     public void start(Stage i_primaryStage) throws Exception {
 
         primaryStage = i_primaryStage;
-        Pane root = FXMLLoader.load(getClass().getResource("startWindow.fxml"));
+        Pane root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         primaryStage.setTitle("Battleship Game");
         scene = new Scene(root);
         primaryStage.setScene(scene);
@@ -47,21 +66,20 @@ public class Controller extends Application  {
 
     @FXML
     public void startGameHandler() throws IOException {
-        Stage news = new Stage();
-        Pane root = FXMLLoader.load(getClass().getResource("sample1.fxml"));
-        news.setScene(new Scene(root, 300, 275));
-        // scene.setRoot(root);
-        news.setScene(scene);
-
-        news.show();
-        ((Stage) primaryStage.getScene().getWindow()).close();
-        //Stage primary = (Stage) btnn.getScene().getWindow();
-        //primary.close();
-        //primaryStage.close();
+        if (battleShipGame.gameStart()){
+            //TODO: implement UI
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR , "error");
+            alert.showAndWait();
+            System.out.println("error");
+        }
     }
 
     @FXML
     public void loadFileHandler() {
+        //TODO: new Thread
+
         gameLoadedLabel = new Label();
 
         final FileChooser fileChooser = new FileChooser();
@@ -70,14 +88,9 @@ public class Controller extends Application  {
             battleShipGame.isFileValid(file.getAbsolutePath());
             //TODO: handle with succsses
         } catch (Exception e) {
-            //TODO: handle with message
-
-            gameLoadedLabel.setPrefWidth(e.getMessage().length() * 6);
-            gameLoadedLabel.setPrefHeight(10);
-            gameLoadedLabel.setVisible(true);
-            gameLoadedLabel.textProperty().bind(new SimpleStringProperty(e.getMessage()));
-            mainPane.getChildren().add(gameLoadedLabel);
-           // System.out.println(e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR , e.getMessage());
+            alert.showAndWait();
+           System.out.println(e.getMessage());
         }
     }
 }

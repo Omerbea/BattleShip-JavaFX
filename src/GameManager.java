@@ -81,7 +81,7 @@ public class GameManager {
                     }
                     userInterface.printMassage("Please Enter full path for xml file :");
                     String xmlpath = new Scanner(System.in).nextLine();
-                    if (this.loadGame(xmlpath)) {
+                    if (true/*this.loadGame(xmlpath)*/) {
                         backToMainMenu("your file is loaded...");
 
                     }
@@ -116,12 +116,20 @@ public class GameManager {
         }
     }
 
+
+
     public Boolean isFileValid(String fileName ) throws Exception {
-            Parser xmlFileParser = new Parser(fileName);
-            return true;
+            Boolean fileValid = false;
+            if (this.isGameRun){
+                 return false;
+            }
+            if (this.loadGame(fileName)) {
+                fileValid =  true;
+            }
+            return fileValid;
     }
 
-    private boolean restartGame (){
+    public boolean restartGame (){
         if (! this.isGameRun){
             backToMainMenu("cannot do restart because no game run..");
         }
@@ -175,7 +183,7 @@ public class GameManager {
         }
         return true;
     }
-    private  boolean quiteGame(){
+    public   boolean quiteGame(){
         userInterface.printMassage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         userInterface.printMassage("Hope you enjoyed:)");
         userInterface.printMassage("Thank you for playing... see you next time ;)");
@@ -294,7 +302,7 @@ public class GameManager {
         }
     }
 
-    private void  finishTheGame(){
+    public void  finishTheGame(){
         this.isGameOver = true;
         this.isGameLoaded =false;
         this.isGameRun = false;
@@ -326,12 +334,12 @@ public class GameManager {
 
 
 
-    private  boolean gameStart(){
+    public  boolean gameStart(){
         if (! this.isGameLoaded){
             //ERROR: the game not loaded.
             //TODO: implement return relevant massage
             backToMainMenu("game not loaded...");
-            return true;
+            return false;
         }
         if (this.isGameRun){
             backToMainMenu("game already run.");
@@ -359,7 +367,7 @@ public class GameManager {
         return  true;
     }
 
-    private boolean loadGame (String xmlPath){
+    private boolean loadGame (String xmlPath) throws Exception {
         if ( this.isGameRun){
             //TODO: present error to the ui and back to the loop
             backToMainMenu("Game is already run... ");
@@ -374,11 +382,8 @@ public class GameManager {
             return true;
         }
         catch (Exception e){
-            backToMainMenu(e.getMessage());
+            throw e;
         }
-
-
-        return false;
     }
 
 
