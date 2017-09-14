@@ -1,6 +1,8 @@
 import GameParser.BattleShipGame;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.beans.binding.BooleanExpression;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import sun.applet.Main;
 
 import java.lang.reflect.Array;
@@ -38,6 +40,14 @@ public class GameManager {
     private  Factory factory ;
     private Player []players;
     private int whoPlay =0;
+    private SimpleStringProperty propWhoPlay = new SimpleStringProperty("Player 1");
+
+
+
+    public SimpleStringProperty propWhoPlayProperty() {
+        return propWhoPlay;
+    }
+
     private Validator validator ;
     private UserInterface userInterface = new UserInterface();
     public GameManager(){
@@ -49,8 +59,26 @@ public class GameManager {
         GameManager gameManager = new GameManager();
         gameManager.start();
     }*/
+    public SimpleStringProperty propScoreCurrentPlayer(){
+        return players[whoPlay].propScoreCurrentPlayer();
+    }
+    public SimpleStringProperty propHitCurrentPlayer(){
+        return players[whoPlay].propScoreCurrentPlayer();
+    }
+    public SimpleStringProperty propAverageTimeTurnCurrentPlayer(){
+        return players[whoPlay].propAverageTimeTurnCurrentPlayer();
+    }
+    public SimpleStringProperty propMissCurrntPlayer(){
+        return players[whoPlay].propMissCurrntPlayer();
+    }
 
-    private void  setMainMenu(){
+    public SimpleStringProperty propNumOfTurnsCurrentPlayer(){
+        return players[whoPlay].propNumOfTurnsCurrentPlayer();
+    }
+
+
+
+  private void  setMainMenu(){
         this.mainMenu.add("read file");  //1
         this.mainMenu.add("start game"); //2
         this.mainMenu.add("show game state"); //3
@@ -135,6 +163,7 @@ public class GameManager {
         }
         userInterface.printMassage("restarting...");
         this.whoPlay=0;
+        this.propWhoPlay.set ("Player 1");
         this.players = null;
         this.gameStatistic = null;
         this.isGameRun =false;
@@ -191,7 +220,7 @@ public class GameManager {
         userInterface.printMassage("Quit!");
         return true;
     }
-    private boolean showStatistic () {
+    public boolean showStatistic () {
         if (!this.isGameRun) {
             this.backToMainMenu("no game run...");
             return  false;
@@ -330,6 +359,12 @@ public class GameManager {
     }
     private  void changePlayer (){
         whoPlay = 1- whoPlay;
+        if (whoPlay == 0){
+            this.propWhoPlay.set("Player 1");
+        }
+        else{
+            this.propWhoPlay.set("Player 2");
+        }
     }
 
 
@@ -337,33 +372,33 @@ public class GameManager {
     public  boolean gameStart(){
         if (! this.isGameLoaded){
             //ERROR: the game not loaded.
-            //TODO: implement return relevant massage
             backToMainMenu("game not loaded...");
             return false;
         }
         if (this.isGameRun){
             backToMainMenu("game already run.");
-            return true;
+            return false;
         }
         this.isGameRun = true;
-        this.showStatusGame();
-        //TODO: embuse of the function its not realy error
-        //handleWithErrorNoGame("");
+
+        // for Ex2 we mark the line below
+        //this.showStatusGame();
         return  true;
     }
 
-     private boolean showStatusGame (){
+     public boolean showStatusGame (){
          if (! this.isGameRun){
              backToMainMenu("no game run...");
                 return false;
         }
         try {
-
             userInterface.printBaordsAndMenu(players[whoPlay].getName() ,players[whoPlay].getMyBoardForPrint(),players[whoPlay].getRivalBoard(), players[whoPlay].getScore(), this.mainMenu );
+         //   return (players[whoPlay].getName() ,players[whoPlay].getMyBoardForPrint(),players[whoPlay].getRivalBoard(), players[whoPlay].getScore(), this.mainMenu );
         }
         catch (Exception e){
             return  false;
         }
+
         return  true;
     }
 

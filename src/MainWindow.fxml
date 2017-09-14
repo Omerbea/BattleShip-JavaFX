@@ -29,7 +29,41 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" >
+         <children>
+            <Label fx:id="currentPlayerNameLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
+                    <font>
+                       <Font size = "14" />
+                    </font>
+            </Label>
+            <Label fx:id="scorePlayerLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size = "14" />
+               </font>
+            </Label>
+            <Label fx:id="numOfHitsLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size = "14" />
+               </font>
+            </Label>
+            <Label fx:id="numOfmissLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size = "14" />
+               </font>
+            </Label>
+            <Label fx:id="averageTimeTurnLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size = "14" />
+               </font>
+            </Label>
+            <Label fx:id="numOfTurnsLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size = "14" />
+               </font>
+            </Label>
+
+         </children>
+      </VBox>
    </right>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />

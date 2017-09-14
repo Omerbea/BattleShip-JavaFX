@@ -1,4 +1,6 @@
 //import GameParser.BattleShipGame;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -12,9 +14,35 @@ public class Player {
         private long avargeTimeTurn = 0;
         private long timeTurn =0;
         private int turns =0 ;
+        private int hits =0;
 
+        private SimpleStringProperty propScoreCurrentPlayer = new SimpleStringProperty("0");
+        private SimpleStringProperty propHitCurrentPlayer = new SimpleStringProperty("0");
+        private SimpleStringProperty propAverageTimeTurnCurrentPlayer = new SimpleStringProperty("0");
+        private SimpleStringProperty propMissCurrntPlayer = new SimpleStringProperty("0");
+        private SimpleStringProperty propNumOfTurnsCurrentPlayer = new SimpleStringProperty("0");
         public int getTurns() {
             return turns;
+        }
+
+        public SimpleStringProperty getPropScoreCurrentPlayer() {
+            return propScoreCurrentPlayer;
+        }
+
+        public SimpleStringProperty getPropAverageTimeTurnCurrentPlayer() {
+            return propAverageTimeTurnCurrentPlayer;
+        }
+
+        public SimpleStringProperty getPropHitCurrentPlayer() {
+            return propHitCurrentPlayer;
+        }
+
+        public SimpleStringProperty getPropMissCurrntPlayer() {
+            return propMissCurrntPlayer;
+        }
+
+        public SimpleStringProperty getPropNumOfTurnsCurrentPlayer() {
+            return propNumOfTurnsCurrentPlayer;
         }
 
         public int getMissNum() {
@@ -32,6 +60,10 @@ public class Player {
             return hms;
         }
 
+        public void incHits (){
+            this.hits += 1;
+            propHitCurrentPlayer.set(String.valueOf(this.hits));
+        }
         public void setAvarageTimeTurn(long time) {
             if (this.avargeTimeTurn == 0) {
                 this.avargeTimeTurn = time;
@@ -44,17 +76,38 @@ public class Player {
                 long test = (this.timeTurn)/(this.turns);
                 this.avargeTimeTurn = test;
             }
+            propAverageTimeTurnCurrentPlayer.set(String.valueOf(this.avargeTimeTurn));
+            propNumOfTurnsCurrentPlayer.set(String.valueOf(this.turns));
         }
 
         public void incMissNum() {
-            this.missNum += 1;      }
+            this.missNum += 1;
+            propMissCurrntPlayer.set(String.valueOf(this.missNum));
+        }
 
-        //NOTE: !!! we must to change this function for targil 2
         public void incScore(int inc) {
-            this.score += 1;
+            this.score += inc;
+            propScoreCurrentPlayer.set((String.valueOf(this.score)));
         }
     }
 
+
+    public SimpleStringProperty propScoreCurrentPlayer(){
+        return this.playerStatistics.getPropScoreCurrentPlayer();
+    }
+    public SimpleStringProperty propHitCurrentPlayer(){
+    return this.playerStatistics.getPropHitCurrentPlayer();
+    }
+    public SimpleStringProperty propAverageTimeTurnCurrentPlayer(){
+        return this.playerStatistics.getPropAverageTimeTurnCurrentPlayer();
+    }
+    public SimpleStringProperty propMissCurrntPlayer(){
+        return this.playerStatistics.getPropMissCurrntPlayer();
+    }
+
+    public SimpleStringProperty propNumOfTurnsCurrentPlayer(){
+        return  this.playerStatistics.getPropNumOfTurnsCurrentPlayer();
+    }
     int counterMine = 0;
     GameTool[][] myBoard ;
     char[][] rivalBoard ;
@@ -121,10 +174,11 @@ public class Player {
     private  void updateStatisticsMyTurn (int row, int column, boolean iHit, String typeGameTool , int score){
         if (iHit){
             if (typeGameTool == "Mine"){
-
+                playerStatistics.incHits();
             }
             else {
                 playerStatistics.incScore(score);
+                playerStatistics.incHits();
             }
         }
         else{
