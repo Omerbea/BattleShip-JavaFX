@@ -116,7 +116,7 @@ public class Controller extends Application  {
         rivalPlayerDetailsLabel.setText("Rival Details");
         //num Mines
         //TODO: add mines to the bind
-        rivalNumMines.textProperty().bind(Bindings.concat("Mines: " ));
+        rivalNumMines.textProperty().bind(Bindings.concat("Mines: " , battleShipGame.getNumOfMinesFromPlayer(1-whoPlayer)));
         /*
         // Mines
         .textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(1- whoPlayer)));
@@ -170,6 +170,9 @@ public class Controller extends Application  {
 
     }
 
+    private void drawRivalShip(){
+        
+    }
 
     private void drawUiBoard(GridPane board) {
         LinkedList<ColumnConstraints> columnConstraints = new LinkedList<>();

@@ -79,6 +79,9 @@ public class GameManager {
         return players[player].propNumOfTurnsCurrentPlayer();
     }
 
+    public int getNumOfMinesFromPlayer (int player){
+        return this.players[player].getNumOfMines();
+    }
 
 
   private void  setMainMenu(){
