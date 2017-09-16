@@ -4,20 +4,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 25;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="loadFileBtn" onMouseClicked="#loadFileHandler" mnemonicParsing="false" text="Load File" />
-            <Button fx:id="startGameBtn" onMouseClicked="#startGameHandler"  mnemonicParsing="false" text="Start Game" />
-            <Button fx:id="restartGameBtn" onMouseClicked="#restartGameHandler" mnemonicParsing="false" text="Restart" />
-            <Button fx:id="exitGameBtn" onMouseClicked="#exitGameHandler" mnemonicParsing="false" text="Exit">
+            <Button fx:id="loadFileBtn" mnemonicParsing="false" onMouseClicked="#loadFileHandler" text="Load File" />
+            <Button fx:id="startGameBtn" mnemonicParsing="false" onMouseClicked="#startGameHandler" text="Start Game" />
+            <Button fx:id="restartGameBtn" mnemonicParsing="false" onMouseClicked="#restartGameHandler" text="Restart" />
+            <Button fx:id="exitGameBtn" mnemonicParsing="false" onMouseClicked="#exitGameHandler" text="Exit">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -37,36 +39,36 @@
       </VBox>
    </left>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" >
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="currentPlayerNameLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                     <font>
-                       <Font size = "14" />
+                       <Font size="14" />
                     </font>
             </Label>
             <Label fx:id="scorePlayerLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                <font>
-                  <Font size = "14" />
+                  <Font size="14" />
                </font>
             </Label>
             <Label fx:id="numOfHitsLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                <font>
-                  <Font size = "14" />
+                  <Font size="14" />
                </font>
             </Label>
             <Label fx:id="numOfmissLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                <font>
-                  <Font size = "14" />
+                  <Font size="14" />
                </font>
             </Label>
             <Label fx:id="averageTimeTurnLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                <font>
-                  <Font size = "14" />
+                  <Font size="14" />
                </font>
             </Label>
             <Label fx:id="numOfTurnsLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                <font>
-                  <Font size = "14" />
+                  <Font size="14" />
                </font>
             </Label>
 
@@ -74,7 +76,29 @@
       </VBox>
    </right>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" >
+         <children>
+            <GridPane prefHeight="212.0" prefWidth="402.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="165.0" minWidth="10.0" prefWidth="165.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="128.0" minWidth="10.0" prefWidth="53.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="205.0" minWidth="10.0" prefWidth="182.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+              </rowConstraints>
+               <children>
+                  <GridPane fx:id="rightBoard" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                    <columnConstraints>
+                    </columnConstraints>
+                  </GridPane>
+                   <GridPane fx:id="leftBoard" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+                       <columnConstraints>
+                       </columnConstraints>
+                   </GridPane>
+               </children>
+            </GridPane>
+         </children></HBox>
    </center>
    <top>
       <StackPane minWidth="-Infinity" prefHeight="88.0" prefWidth="431.0" BorderPane.alignment="CENTER">
