@@ -1,12 +1,10 @@
 //import GameParser.BattleShipGame;
 import javafx.beans.property.SimpleStringProperty;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class Player {
-
 
     class PlayerStatistics {
         private int score = 0;
@@ -116,6 +114,8 @@ public class Player {
     private  boolean isAlive;
     private int size;
     private PlayerStatistics playerStatistics = new PlayerStatistics();
+    private Map<String , LinkedList<GameTool>> playerGameTools = new HashMap<String , LinkedList<GameTool>>();
+
     public String getName() {
         return Name;
     }
@@ -139,13 +139,14 @@ public class Player {
     /* name - player name
         size - size board
         newPlayreBoard -  is must be a valid before we call to the constractor*/
-    public Player(String i_name, int i_size,  GameTool [][] i_newPlayerBoard, int i_numOfship) {
+    public Player(String i_name, int i_size, GameTool [][] i_newPlayerBoard, int i_numOfship , Map<String ,LinkedList<GameTool>> gameTools) {
         Name = i_name;
         myBoard = i_newPlayerBoard;
         rivalBoard = new char[i_size][i_size];
         numOfShip = i_numOfship;
         isAlive = true;
         size = i_size;
+        playerGameTools = gameTools;
     }
 
     /* return "non" if no hit
@@ -260,6 +261,11 @@ public class Player {
 
     public char[][] getRivalBoard() {
         return rivalBoard;
+    }
+
+
+    public GameTool getGameToolByCoordinate(int row, int column) {
+        return myBoard[row][column];
     }
 
 

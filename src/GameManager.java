@@ -1,5 +1,6 @@
 import GameParser.BattleShipGame;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,11 +8,13 @@ import sun.applet.Main;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 //comment1--
 public class GameManager {
+
     class GameStatistic {
         int howManyTurn =0 ;
         long startTime = System.nanoTime();
@@ -123,7 +126,7 @@ public class GameManager {
                     this.showStatusGame();
                     break;
                 case 4:
-                    this.executeMove();
+                   // this.executeMove();
                     break;
                 case 5:
                     this.showStatistic();
@@ -254,22 +257,13 @@ public class GameManager {
                 userInterface.printMenu(this.mainMenu, "middel");
     }
 
-    private  boolean executeMove() {
-        if (!this.isGameRun) {
-            this.backToMainMenu("no game run...");
-            return false;
-        }
-        userInterface.printMassage( players[whoPlay].getName() + " Please insert coordinates. Should be from the form : ");
-        userInterface.printMassage("Row(number) space column(capital letter)");
-        userInterface.printMassage("for example : 4 B");
+    public boolean executeMove(int row , int column) {
         long finishTime = 0;
         long startTime =0;
-        ArrayList<Integer> coordinates = null;
-        while (true) {
-            startTime = System.nanoTime();
-            coordinates = userInterface.waitForCoordinates();
-            //Fixing user row to start from 0
-            coordinates.set(0 , coordinates.get(0) - 1);
+        ArrayList<Integer> coordinates = new ArrayList<>();
+        coordinates.add(0 , row);
+        coordinates.add(1 , column);
+/*
             if (! validator.isCordinateInRange(coordinates.get(0)) || ! validator.isCordinateInRange((coordinates.get(1))))
             {
                 userInterface.printMassage(("your coordinates not in the range , please try again with cooredinates that are in range..."));
@@ -281,8 +275,8 @@ public class GameManager {
             if (this.checkIfgGuessed (coordinates) == false){
                 break;
             }
-            userInterface.printMassage("You guessed already this cooredinates. try again..");
-        }
+            userInterface.printMassage("You guessed already this cooredinates. try again..");*/
+
         //Validator
         long deltaTime = finishTime - startTime ;
         players[whoPlay].setAvargeTimeTurn(deltaTime);
@@ -290,6 +284,7 @@ public class GameManager {
 
         ArrayList <String> gameToolType = players[1- whoPlay].whoFindThere(coordinates.get(0), coordinates.get(1));
         executeByTypeTool (gameToolType , coordinates , whoPlay, false);
+        showStatusGame();
 
         return true;
     }
@@ -409,6 +404,7 @@ public class GameManager {
             return  false;
         }
         try{
+
             this.factory = new Factory(xmlPath);
             this.players = factory.createPlayers();
             this.validator = factory.getGameDataValidator();
@@ -420,6 +416,24 @@ public class GameManager {
             throw e;
         }
     }
+
+    public int getBoardSize() {
+         return factory.GameData.getBoardSize();
+    }
+
+    public GameTool getGameToolFromBoard(int row , int column) {
+         return players[whoPlay].getGameToolByCoordinate(row , column);
+    }
+
+
+    public char[][] getCurrentPlayerBoard() {
+         return players[whoPlay].getMyBoardForPrint();
+    }
+
+    public char[][] getRivalBoard() {
+        return players[whoPlay].getRivalBoard();
+    }
+
 
 
 }

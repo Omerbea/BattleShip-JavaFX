@@ -2,7 +2,7 @@ import GameParser.BattleShipGame;
 import GameParser.BattleShipGame.Boards.Board.Ship;
 import GameParser.BattleShipGame.ShipTypes.ShipType;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Factory {
@@ -20,6 +20,7 @@ public class Factory {
     }
 
     public Player[] createPlayers() throws Exception {
+        Map<String, LinkedList<GameTool>> playerGameTools = new HashMap<>();
         //Validation pahse :
         try {
             GameDataValidator.ValidateShipTypes(GameData.getShipTypes().getShipType() , GameData.getBoards().getBoard());
@@ -31,14 +32,15 @@ public class Factory {
         Player[] PlayersArray  = new Player[2];
 
         for(int player = 0 ; player < 2 ; player++) {
-            GameTool[][] board = initPlayerBoard(GameData.getBoards().getBoard().get(player).getShip() , player + 1);
-            PlayersArray[player] = new Player("Player" + (player + 1), GameData.getBoardSize(), board, GameData.getBoards().getBoard().get(player).getShip().size());
+            GameTool[][] board = initPlayerBoard(GameData.getBoards().getBoard().get(player).getShip() , player + 1 , playerGameTools);
+            PlayersArray[player] = new Player("Player" + (player + 1), GameData.getBoardSize(), board, GameData.getBoards().getBoard().get(player).getShip().size() , playerGameTools);
+            playerGameTools.clear();
 
         }
         return PlayersArray;
     }
 
-    private GameTool[][] initPlayerBoard(List<Ship> ships , int player) throws Exception {
+    private GameTool[][] initPlayerBoard(List<Ship> ships , int player , Map<String , LinkedList<GameTool>> playerGameTools) throws Exception {
         int size = GameData.getBoardSize();
         int column = -1 , row = -1 ;
         GameTool[][] board = new GameTool[size][size];
@@ -77,11 +79,14 @@ public class Factory {
             row = ship.getPosition().getX();
             column = ship.getPosition().getY();
             try {
-                setBoard(column, row, board, ship.getDirection(), ship.getShipTypeId());
+                setBoard(column, row, board, ship.getDirection(), ship.getShipTypeId() , playerGameTools);
             } catch (Exception e) {
                 throw e ;
             }
         }
+
+
+
         return board;
     }
 
@@ -149,7 +154,7 @@ public class Factory {
 
     }
 
-    private void setBoard(int column, int row, GameTool[][] board, String shipDirection, String shipTypeId) throws Exception {
+    private void setBoard(int column, int row, GameTool[][] board, String shipDirection, String shipTypeId ,Map<String , LinkedList<GameTool>> playerGameTools ) throws Exception {
         BattleShip bship = new BattleShip("Ship" ,shipTypeId ,getShipSizeByType(shipTypeId) , '#' , getScoreByShipTypeId(shipTypeId) , shipDirection);
         int numberOfIterations = 0;
         int tempCol = column - 1 ;
@@ -220,7 +225,13 @@ public class Factory {
             isFormatSupported = true;
         }
 
-
+        if(playerGameTools.containsKey(bship.getType())) {
+            playerGameTools.get(bship.getType()).add(bship);
+        } else {
+            LinkedList<GameTool> tools = new LinkedList<>();
+            tools.add(bship);
+            playerGameTools.put(bship.getType() , tools);
+        }
         //need to support advanced game
 
         if(!isFormatSupported){throw new Exception(shipDirection + " direction is not supported!");}
