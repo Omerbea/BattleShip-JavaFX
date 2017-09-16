@@ -37,14 +37,15 @@ public class Controller extends Application  {
     @FXML Label numOfmissLabel ;
     @FXML Label averageTimeTurnLabel ;
     @FXML Label numOfTurnsLabel ;
+    @FXML Label rivalPlayerNameLabel;
+    @FXML Label rivalScorePlayerLabel ;
+    @FXML Label rivalNumOfHitsLabel ;
+    @FXML Label rivalNumOfmissLabel ;
+    @FXML Label rivalAverageTimeTurnLabel ;
+    @FXML Label rivalNumOfTurnsLabel ;
     Label gameLoadedLabel;
     GameManager battleShipGame = new GameManager();
-    SimpleStringProperty propcurrentPlayerName = new SimpleStringProperty();
-    SimpleStringProperty propOfmiss= new SimpleStringProperty();
-    SimpleStringProperty propAverageTimeTurn = new SimpleStringProperty();
-    SimpleStringProperty propNumOfTurns = new SimpleStringProperty();
-    SimpleStringProperty propScorePlayer = new SimpleStringProperty();
-    SimpleStringProperty propNumOfHits = new SimpleStringProperty();
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -73,19 +74,38 @@ public class Controller extends Application  {
     //TODO: back the comment below to be active. I comment this only for tests
     //private void printBaordsAndMenu(String name, char[][] boardOne, char[][] boardTwo, int score, List<String> menu){
     private void BindStatistics2Ui(){
+        int whoPlayer =0;
         //Player Name
         currentPlayerNameLabel.textProperty().bind(Bindings.selectString(battleShipGame.propWhoPlayProperty()));
+        if (battleShipGame.propWhoPlayProperty().getName() == "Player 2"){
+            whoPlayer = 1;
+        }
+    //Current Player
         // score
-        scorePlayerLabel.textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer()));
+        scorePlayerLabel.textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(whoPlayer)));
         //Hit
-        numOfHitsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propHitCurrentPlayer()));
+        numOfHitsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propHitCurrentPlayer(whoPlayer)));
         //Miss
-        numOfmissLabel.textProperty().bind(Bindings.selectString(battleShipGame.propMissCurrntPlayer()));
+        numOfmissLabel.textProperty().bind(Bindings.selectString(battleShipGame.propMissCurrntPlayer(whoPlayer)));
         //Average Turn Time
-        averageTimeTurnLabel.textProperty().bind(Bindings.selectString(battleShipGame.propAverageTimeTurnCurrentPlayer()));
+        averageTimeTurnLabel.textProperty().bind(Bindings.selectString(battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlayer)));
         //Number Of Turns
-        numOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer()));
-
+        numOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(whoPlayer)));
+    //Raivel Player
+        //Title rival
+        rivalPlayerNameLabel.setText("Rival Details");
+        /*
+        // score
+        rivalScorePlayerLabel.textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(1- whoPlayer)));
+        //Hit
+        rivalNumOfHitsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propHitCurrentPlayer(1-whoPlayer)));
+        //Miss
+        rivalNumOfmissLabel.textProperty().bind(Bindings.selectString(battleShipGame.propMissCurrntPlayer(1-whoPlayer)));
+        //Average Turn Time
+        rivalAverageTimeTurnLabel.textProperty().bind(Bindings.selectString(battleShipGame.propAverageTimeTurnCurrentPlayer(1-whoPlayer)));
+        //Number Of Turns
+        rivalNumOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(1-whoPlayer)));
+        */
     }
 
     @FXML

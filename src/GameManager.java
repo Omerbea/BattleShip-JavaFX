@@ -59,21 +59,21 @@ public class GameManager {
         GameManager gameManager = new GameManager();
         gameManager.start();
     }*/
-    public SimpleStringProperty propScoreCurrentPlayer(){
-        return players[whoPlay].propScoreCurrentPlayer();
+    public SimpleStringProperty propScoreCurrentPlayer(int player){
+        return players[player].propScoreCurrentPlayer();
     }
-    public SimpleStringProperty propHitCurrentPlayer(){
-        return players[whoPlay].propScoreCurrentPlayer();
+    public SimpleStringProperty propHitCurrentPlayer(int player){
+        return players[player].propScoreCurrentPlayer();
     }
-    public SimpleStringProperty propAverageTimeTurnCurrentPlayer(){
-        return players[whoPlay].propAverageTimeTurnCurrentPlayer();
+    public SimpleStringProperty propAverageTimeTurnCurrentPlayer(int player){
+        return players[player].propAverageTimeTurnCurrentPlayer();
     }
-    public SimpleStringProperty propMissCurrntPlayer(){
-        return players[whoPlay].propMissCurrntPlayer();
+    public SimpleStringProperty propMissCurrntPlayer(int player){
+        return players[player].propMissCurrntPlayer();
     }
 
-    public SimpleStringProperty propNumOfTurnsCurrentPlayer(){
-        return players[whoPlay].propNumOfTurnsCurrentPlayer();
+    public SimpleStringProperty propNumOfTurnsCurrentPlayer(int player){
+        return players[player].propNumOfTurnsCurrentPlayer();
     }
 
 
@@ -344,7 +344,7 @@ public class GameManager {
         if (gameToolType.get(0) == "Mine"){
             //players[whoPlay].rivalBoard[coordinates.get(0)][coordinates.get(1)] = '-';
             //players[1 - whoPlay].rivalBoard[coordinates.get(0)][coordinates.get(1)] = '-';
-            players[whoPlay].updateIMissMyTurn(coordinates.get(0), coordinates.get(1));
+            players[whoPlay].updateIHitMyTurn(coordinates.get(0), coordinates.get(1),"mine", 0);
             players[ 1- whoPlay].updateIMissMyTurn(coordinates.get(0), coordinates.get(1));
             players[whoPlay].updateHitMe(coordinates, true);
             players[1- whoPlay].updateHitMe((coordinates), true);
