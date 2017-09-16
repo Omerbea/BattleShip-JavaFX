@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 25;" BorderPane.alignment="CENTER">
@@ -35,6 +37,11 @@
                <Font size = "14" />
             </font>
             </Label>
+            <StackPane>
+            <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50">
+               <Image url="Mine.png"></Image>
+            </ImageView>
+            </StackPane>
          </children>
       </VBox>
    </left>
