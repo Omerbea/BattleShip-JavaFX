@@ -30,10 +30,15 @@
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" >
          <children>
-            <Label fx:id="rivalPlayerNameLabel" alignment="CENTER" prefHeight="15.0" prefWidth="192.0" text="" textAlignment="CENTER">
+            <Label fx:id="rivalPlayerDetailsLabel" alignment="CENTER" prefHeight="15.0" prefWidth="192.0" text="" textAlignment="CENTER">
             <font>
                <Font size = "14" />
             </font>
+            </Label>
+            <Label fx:id="rivalNumMines" alignment="CENTER" prefHeight="15.0" prefWidth="192.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size = "14" />
+               </font>
             </Label>
          </children>
       </VBox>
