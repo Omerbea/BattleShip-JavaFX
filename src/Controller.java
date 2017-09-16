@@ -102,15 +102,15 @@ public class Controller extends Application  {
         }
     //Current Player
         // score
-        scorePlayerLabel.textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(whoPlayer)));
+        scorePlayerLabel.textProperty().bind(Bindings.concat("Score: " ,battleShipGame.propScoreCurrentPlayer(whoPlayer).getValue()));
         //Hit
-        numOfHitsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propHitCurrentPlayer(whoPlayer)));
+        numOfHitsLabel.textProperty().bind(Bindings.concat("Hits: " , battleShipGame.propHitCurrentPlayer(whoPlayer).getValue()));
         //Miss
-        numOfmissLabel.textProperty().bind(Bindings.selectString(battleShipGame.propMissCurrntPlayer(whoPlayer)));
+        numOfmissLabel.textProperty().bind(Bindings.concat("Miss: ", battleShipGame.propMissCurrntPlayer(whoPlayer).getValue()));
         //Average Turn Time
-        averageTimeTurnLabel.textProperty().bind(Bindings.selectString(battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlayer)));
+        averageTimeTurnLabel.textProperty().bind(Bindings.concat("Average Time for Turn: " , battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlayer).getValue()));
         //Number Of Turns
-        numOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(whoPlayer)));
+        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlayer).getValue()));
     //Raivel Player
         //Title rival
         rivalPlayerNameLabel.setText("Rival Details");
