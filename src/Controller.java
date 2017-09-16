@@ -102,15 +102,15 @@ public class Controller extends Application  {
         }
     //Current Player
         // score
-        scorePlayerLabel.textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(whoPlayer)));
+        scorePlayerLabel.textProperty().bind(Bindings.concat("Score: " ,battleShipGame.propScoreCurrentPlayer(whoPlayer).getValue()));
         //Hit
-        numOfHitsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propHitCurrentPlayer(whoPlayer)));
+        numOfHitsLabel.textProperty().bind(Bindings.concat("Hits: " , battleShipGame.propHitCurrentPlayer(whoPlayer).getValue()));
         //Miss
-        numOfmissLabel.textProperty().bind(Bindings.selectString(battleShipGame.propMissCurrntPlayer(whoPlayer)));
+        numOfmissLabel.textProperty().bind(Bindings.concat("Miss: ", battleShipGame.propMissCurrntPlayer(whoPlayer).getValue()));
         //Average Turn Time
-        averageTimeTurnLabel.textProperty().bind(Bindings.selectString(battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlayer)));
+        averageTimeTurnLabel.textProperty().bind(Bindings.concat("Average Time for Turn: " , battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlayer).getValue()));
         //Number Of Turns
-        numOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(whoPlayer)));
+        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlayer).getValue()));
     //Raivel Player
         //Title rival
         rivalPlayerNameLabel.setText("Rival Details");
@@ -126,15 +126,16 @@ public class Controller extends Application  {
         //Number Of Turns
         rivalNumOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(1-whoPlayer)));
         */
+
     }
 
     @FXML
     public void startGameHandler() throws IOException {
         if (battleShipGame.gameStart()){
-            //TODO: implement UI, for this we need to bind from gameManager to controller and UI
             BindStatistics2Ui();
             drawUiBoard(leftBoard);
             drawUiBoard(rightBoard);
+            //TODO: drag and drop mins
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR , "error");
