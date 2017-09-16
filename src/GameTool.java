@@ -1,3 +1,5 @@
+import sun.text.normalizer.UCharacterProperty;
+
 import java.util.ArrayList;
 
 public abstract class GameTool {

@@ -1,22 +1,31 @@
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import sun.text.normalizer.UCharacterProperty;
 
 import javax.naming.Binding;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,8 +52,19 @@ public class Controller extends Application  {
     @FXML Label rivalNumOfmissLabel ;
     @FXML Label rivalAverageTimeTurnLabel ;
     @FXML Label rivalNumOfTurnsLabel ;
+    @FXML GridPane rightBoard;
+    @FXML GridPane leftBoard;
     Label gameLoadedLabel;
     GameManager battleShipGame = new GameManager();
+/*    SimpleStringProperty propcurrentPlayerName = new SimpleStringProperty();
+    SimpleStringProperty propOfmiss= new SimpleStringProperty();
+    SimpleStringProperty propAverageTimeTurn = new SimpleStringProperty();
+    SimpleStringProperty propNumOfTurns = new SimpleStringProperty();
+    SimpleStringProperty propScorePlayer = new SimpleStringProperty();
+    SimpleStringProperty propNumOfHits = new SimpleStringProperty();*/
+
+    extendedButton [][]player1Board;
+    extendedButton [][]player2Board;
 
     public static void main(String[] args) {
         launch(args);
@@ -113,16 +133,99 @@ public class Controller extends Application  {
         if (battleShipGame.gameStart()){
             //TODO: implement UI, for this we need to bind from gameManager to controller and UI
             BindStatistics2Ui();
+            drawUiBoard(leftBoard);
+            drawUiBoard(rightBoard);
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR , "error");
             alert.showAndWait();
             System.out.println("error");
         }
+
+
+    }
+
+    private void fillBoardWithData(GridPane Board , char[][] LogicBoard) {
+
+        /*for (Node node : Board.getChildren()) {
+
+            if(battleShipGame.getGameToolFromBoard(Board.getRowIndex(node) ,Board.getColumnIndex(node)) != null) {
+                ((extendedButton)node).setText(Character.toString(LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]));
+            } else {
+                ((extendedButton)node).setText(" ");
+            }
+        }*/
+        for (Node node : Board.getChildren()) {
+                ((extendedButton)node).setText(Character.toString(LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]));
+        }
+
+
+
+    }
+
+
+    private void drawUiBoard(GridPane board) {
+        LinkedList<ColumnConstraints> columnConstraints = new LinkedList<>();
+        //hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"
+        for(int i = 0 ; i < battleShipGame.getBoardSize() ; i++) {
+            columnConstraints.add(i , new ColumnConstraints(0.0,50.0,Double.MAX_VALUE,Priority.ALWAYS, HPos.LEFT,true));
+        }
+        LinkedList<RowConstraints> rowConstraints = new LinkedList<>();
+        //minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"
+        for(int i = 0 ; i < battleShipGame.getBoardSize() ; i++) {
+            rowConstraints.add(i , new RowConstraints(0.0,50.0,Double.MAX_VALUE,Priority.ALWAYS, VPos.BOTTOM,true));
+        }
+
+        for(int i = 0; i < battleShipGame.getBoardSize() - 1  ; i++ ) {
+            board.addRow(i);
+            for (int j = 0 ; j < battleShipGame.getBoardSize() - 1 ; j++) {
+                board.addColumn(j);
+            }
+        }
+
+        //board.setStyle("-fx-grid-lines-visible: true");
+        board.getColumnConstraints().addAll(columnConstraints);
+        board.getRowConstraints().addAll(rowConstraints);
+
+
+        for (int i = 0; i < battleShipGame.getBoardSize(); i++) {
+
+            for (int j = 0; j < battleShipGame.getBoardSize(); j++) {
+                    extendedButton btn = new extendedButton(i, j);
+                    btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                    if(board == leftBoard) {
+                        btn.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                executeMoveHandler(((extendedButton) event.getSource()).getRow(), ((extendedButton) event.getSource()).getColumn());
+                            }
+                        });
+                        btn.setStyle("-fx-focus-color: transparent;");
+                    } else {
+                        btn.setDisable(true);
+                        btn.setStyle("-fx-opacity: 1.0 ;");
+                    }
+                    board.add(btn, i, j);
+                }
+            }
+        fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
+        fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
+
+        }
+
+    private void executeMoveHandler(int row, int column) {
+        battleShipGame.executeMove(column,row);
+        fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
+        fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
     }
 
     @FXML
     public void loadFileHandler() {
+/*        try {
+            battleShipGame.isFileValid("C:\\BattleShip\\Battleship\\resources\\battleShip_5_basic.xml");
+        } catch (Exception e) {
+
+        }*/
         //TODO: new Thread . maybe we need to pass a task for the new thread and until his task finished we show progress bar
 
         gameLoadedLabel = new Label();
