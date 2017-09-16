@@ -126,15 +126,16 @@ public class Controller extends Application  {
         //Number Of Turns
         rivalNumOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(1-whoPlayer)));
         */
+
     }
 
     @FXML
     public void startGameHandler() throws IOException {
         if (battleShipGame.gameStart()){
-            //TODO: implement UI, for this we need to bind from gameManager to controller and UI
             BindStatistics2Ui();
             drawUiBoard(leftBoard);
             drawUiBoard(rightBoard);
+            //TODO: drag and drop mins
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR , "error");
