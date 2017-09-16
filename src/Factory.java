@@ -30,10 +30,11 @@ public class Factory {
         }
 
         Player[] PlayersArray  = new Player[2];
+        int numberOfMines = GameData.getMine().getAmount();
 
         for(int player = 0 ; player < 2 ; player++) {
             GameTool[][] board = initPlayerBoard(GameData.getBoards().getBoard().get(player).getShip() , player + 1 , playerGameTools);
-            PlayersArray[player] = new Player("Player" + (player + 1), GameData.getBoardSize(), board, GameData.getBoards().getBoard().get(player).getShip().size() , playerGameTools);
+            PlayersArray[player] = new Player("Player" + (player + 1), GameData.getBoardSize(), board, GameData.getBoards().getBoard().get(player).getShip().size() , playerGameTools , numberOfMines);
             playerGameTools.clear();
 
         }

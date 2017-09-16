@@ -231,12 +231,12 @@ public class Controller extends Application  {
 
     @FXML
     public void loadFileHandler() {
-/*        try {
+        try {
             battleShipGame.isFileValid("C:\\BattleShip\\Battleship\\resources\\battleShip_5_basic.xml");
         } catch (Exception e) {
 
-        }*/
-        //TODO: new Thread . maybe we need to pass a task for the new thread and until his task finished we show progress bar
+        }
+/*        //TODO: new Thread . maybe we need to pass a task for the new thread and until his task finished we show progress bar
 
         gameLoadedLabel = new Label();
 
@@ -250,6 +250,6 @@ public class Controller extends Application  {
             Alert alert = new Alert(Alert.AlertType.ERROR , e.getMessage());
             alert.showAndWait();
            System.out.println(e.getMessage());
-        }
+        }*/
     }
 }

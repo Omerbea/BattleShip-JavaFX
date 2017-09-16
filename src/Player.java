@@ -158,7 +158,7 @@ public class Player {
     /* name - player name
         size - size board
         newPlayreBoard -  is must be a valid before we call to the constractor*/
-    public Player(String i_name, int i_size, GameTool [][] i_newPlayerBoard, int i_numOfship , Map<String ,LinkedList<GameTool>> gameTools) {
+    public Player(String i_name, int i_size, GameTool [][] i_newPlayerBoard, int i_numOfship , Map<String ,LinkedList<GameTool>> gameTools , int i_numberOfMines) {
         Name = i_name;
         myBoard = i_newPlayerBoard;
         rivalBoard = new char[i_size][i_size];
@@ -166,6 +166,8 @@ public class Player {
         isAlive = true;
         size = i_size;
         playerGameTools = gameTools;
+        setNumOfMines(i_numberOfMines);
+
     }
 
     /* return "non" if no hit
