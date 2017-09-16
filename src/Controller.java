@@ -46,8 +46,8 @@ public class Controller extends Application  {
     @FXML Label numOfmissLabel ;
     @FXML Label averageTimeTurnLabel ;
     @FXML Label numOfTurnsLabel ;
-    @FXML Label rivalPlayerNameLabel;
-    @FXML Label rivalScorePlayerLabel ;
+    @FXML Label rivalPlayerDetailsLabel;
+    @FXML Label rivalNumMines ;
     @FXML Label rivalNumOfHitsLabel ;
     @FXML Label rivalNumOfmissLabel ;
     @FXML Label rivalAverageTimeTurnLabel ;
@@ -113,10 +113,13 @@ public class Controller extends Application  {
         numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlayer).getValue()));
     //Raivel Player
         //Title rival
-        rivalPlayerNameLabel.setText("Rival Details");
+        rivalPlayerDetailsLabel.setText("Rival Details");
+        //num Mines
+        //TODO: add mines to the bind
+        rivalNumMines.textProperty().bind(Bindings.concat("Mines: " ));
         /*
-        // score
-        rivalScorePlayerLabel.textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(1- whoPlayer)));
+        // Mines
+        .textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(1- whoPlayer)));
         //Hit
         rivalNumOfHitsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propHitCurrentPlayer(1-whoPlayer)));
         //Miss
@@ -127,6 +130,8 @@ public class Controller extends Application  {
         rivalNumOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(1-whoPlayer)));
         */
 
+
+
     }
 
     @FXML
@@ -135,6 +140,7 @@ public class Controller extends Application  {
             BindStatistics2Ui();
             drawUiBoard(leftBoard);
             drawUiBoard(rightBoard);
+
             //TODO: drag and drop mins
         }
         else{

@@ -13,7 +13,7 @@ public class Player {
         private long timeTurn =0;
         private int turns =0 ;
         private int hits =0;
-
+        private int numofMines =0;
         private SimpleStringProperty propScoreCurrentPlayer = new SimpleStringProperty("0");
         private SimpleStringProperty propHitCurrentPlayer = new SimpleStringProperty("0");
         private SimpleStringProperty propAverageTimeTurnCurrentPlayer = new SimpleStringProperty("0");
@@ -21,6 +21,14 @@ public class Player {
         private SimpleStringProperty propNumOfTurnsCurrentPlayer = new SimpleStringProperty("0");
         public int getTurns() {
             return turns;
+        }
+
+        public int getNumofMines() {
+            return numofMines;
+        }
+
+        public void setNumofMines(int numofMines) {
+            this.numofMines = numofMines;
         }
 
         public SimpleStringProperty getPropScoreCurrentPlayer() {
@@ -62,6 +70,9 @@ public class Player {
             this.hits += 1;
             propHitCurrentPlayer.set(String.valueOf(this.hits));
         }
+
+
+
         public void setAvarageTimeTurn(long time) {
             if (this.avargeTimeTurn == 0) {
                 this.avargeTimeTurn = time;
@@ -116,6 +127,14 @@ public class Player {
     private PlayerStatistics playerStatistics = new PlayerStatistics();
     private Map<String , LinkedList<GameTool>> playerGameTools = new HashMap<String , LinkedList<GameTool>>();
 
+    public int getNumOfMines (){
+        return this.playerStatistics.getNumofMines();
+    }
+
+    public void setNumOfMines(int num){
+        this.playerStatistics.setNumofMines(num);
+    }
+
     public String getName() {
         return Name;
     }
@@ -139,7 +158,7 @@ public class Player {
     /* name - player name
         size - size board
         newPlayreBoard -  is must be a valid before we call to the constractor*/
-    public Player(String i_name, int i_size, GameTool [][] i_newPlayerBoard, int i_numOfship , Map<String ,LinkedList<GameTool>> gameTools) {
+    public Player(String i_name, int i_size, GameTool [][] i_newPlayerBoard, int i_numOfship , Map<String ,LinkedList<GameTool>> gameTools , int i_numberOfMines) {
         Name = i_name;
         myBoard = i_newPlayerBoard;
         rivalBoard = new char[i_size][i_size];
@@ -147,6 +166,8 @@ public class Player {
         isAlive = true;
         size = i_size;
         playerGameTools = gameTools;
+        setNumOfMines(i_numberOfMines);
+
     }
 
     /* return "non" if no hit

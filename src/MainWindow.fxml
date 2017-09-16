@@ -32,16 +32,16 @@
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" >
          <children>
-            <Label fx:id="rivalPlayerNameLabel" alignment="CENTER" prefHeight="15.0" prefWidth="192.0" text="" textAlignment="CENTER">
+            <Label fx:id="rivalPlayerDetailsLabel" alignment="CENTER" prefHeight="15.0" prefWidth="192.0" text="" textAlignment="CENTER">
             <font>
                <Font size = "14" />
             </font>
             </Label>
-            <StackPane>
-            <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50">
-               <Image url="Mine.png"></Image>
-            </ImageView>
-            </StackPane>
+            <Label fx:id="rivalNumMines" alignment="CENTER" prefHeight="15.0" prefWidth="192.0" text="" textAlignment="CENTER">
+               <font>
+                  <Font size = "14" />
+               </font>
+            </Label>
          </children>
       </VBox>
    </left>
@@ -102,6 +102,11 @@
                    <GridPane fx:id="leftBoard" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                        <columnConstraints>
                        </columnConstraints>
+                   </GridPane>
+                   <GridPane>
+                       <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50">
+                           <Image url="Mine.png"></Image>
+                       </ImageView>
                    </GridPane>
                </children>
             </GridPane>
