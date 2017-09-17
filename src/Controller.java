@@ -16,10 +16,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -95,6 +94,7 @@ public class Controller extends Application  {
 
         primaryStage = i_primaryStage;
         Pane root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+
         primaryStage.setTitle("Battleship Game");
         scene = new Scene(root);
         primaryStage.setScene(scene);
@@ -151,6 +151,8 @@ public class Controller extends Application  {
             drawUiBoard(rightBoard);
             drawRivalShips();
             //TODO: drag and drop mins
+            setDragAndDropMines();
+
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR , "error");
@@ -158,6 +160,36 @@ public class Controller extends Application  {
             System.out.println("error");
         }
 
+
+    }
+
+    private void setDragAndDropMines() {
+        mineImage.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("start handle");
+                Dragboard db = mineImage.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                content.putImage(new Image("mine.png" , 50 ,50,false,false));
+
+                db.setContent(content);
+
+                mineImage.setImage(null);
+
+                event.consume();
+            }
+        });
+        mineImage.setOnDragDone(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if(event.getTransferMode() == TransferMode.MOVE) {
+                    System.out.println("ok");
+                } else {
+                    System.out.println("fail");
+                }
+                event.consume();
+            }
+        });
 
     }
 
@@ -287,8 +319,8 @@ public class Controller extends Application  {
                         btn.setStyle("-fx-focus-color: transparent;");
                     } else {
                        //btn.setDisable(true);
+                        setDragAndDropTargetMine(btn);
                         btn.setStyle("-fx-opacity: 1.0 ;");
-                        //btn.addEventFilter(MouseDragEvent.MOUSE_DRAG_RELEASED , dragHandelr());
                     }
                     board.add(btn, i, j);
                 }
@@ -297,6 +329,66 @@ public class Controller extends Application  {
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
 
         }
+
+    private void setDragAndDropTargetMine(extendedButton btn) {
+
+        btn.setOnDragEntered(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if(event.getGestureSource() != btn /*TODO : for another drag*/) {
+//                    System.out.println(btn.getColumn() + " " + btn.getRow());
+  //                  btn.setText("$$");
+                }
+                event.consume();
+            }
+
+        });
+
+        btn.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                // change back to original color
+                event.consume();
+            }
+
+        });
+
+
+        btn.setOnDragDone(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                System.out.println("===========================");
+            }
+        });
+
+        btn.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                boolean sucess = false ;
+
+                if(db.hasImage()) {
+                    //TODO : set mine image
+                    System.out.println(btn.getColumn() + " " + btn.getRow());
+                    sucess = true ;
+                }
+                event.setDropCompleted(sucess);
+                event.consume();
+            }
+        });
+
+        btn.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if(event.getGestureSource() != btn) {
+                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                }
+
+                event.consume();
+            }
+        });
+
+    }
 
 
     private void executeMoveHandler(int row, int column) {
@@ -331,12 +423,7 @@ public class Controller extends Application  {
 
     }
 
-    public void imageDropped(MouseEvent dragEvent) {
+    public void dragHandler(MouseEvent mouseEvent) {
 
-        System.out.println(dragEvent.getTarget().toString());
-    }
-
-    public void imageDragOver(MouseEvent dragEvent) {
-        System.out.println("drag");
     }
 }
