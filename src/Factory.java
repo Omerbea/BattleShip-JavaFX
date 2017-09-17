@@ -157,7 +157,7 @@ public class Factory {
     }
 
     private void setBoard(int column, int row, GameTool[][] board, String shipDirection, String shipTypeId ,Map<String , LinkedList<GameTool>> playerGameTools ) throws Exception {
-        BattleShip bship = new BattleShip("Ship" ,shipTypeId ,getShipSizeByType(shipTypeId) , '#' , getScoreByShipTypeId(shipTypeId) , shipDirection);
+        BattleShip bship = new BattleShip(getCategoryByShipType(shipTypeId) ,shipTypeId ,getShipSizeByType(shipTypeId) , '#' , getScoreByShipTypeId(shipTypeId) , shipDirection);
         int numberOfIterations = 0;
         int tempCol = column - 1 ;
         int tempRow = row - 1 ;

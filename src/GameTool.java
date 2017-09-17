@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class GameTool {
 
-    private String species;
+    private String category;
     private String type;
     private char sign;
     int score;
@@ -14,8 +14,8 @@ public abstract class GameTool {
     private boolean isAlive = true;
     ArrayList<Position>  positionsHited = new ArrayList<>();
 
-    public GameTool(String i_species, String i_type, char i_sign, int i_score, int i_size ) {
-        species = i_species;
+    public GameTool( String i_category , String i_type, char i_sign, int i_score, int i_size ) {
+        category = i_category;
         type = i_type;
         sign = i_sign;
         score = i_score;
@@ -35,9 +35,6 @@ public abstract class GameTool {
         return this.isAlive;
     }
 
-    public String getSpecies (){
-        return  species;
-    }
 
     public String getType() {
         return type;

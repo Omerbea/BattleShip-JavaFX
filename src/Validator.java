@@ -80,7 +80,7 @@ public class Validator {
 
         for(Postion p : listOfGameToolCoordinates) {
             if(board[p.getRow()][p.getColumn()] != null) {
-              throw new Exception("You are trying to put "+ bship.getSpecies() + " on "+ board[p.getRow()][p.getColumn()].getSpecies()+" at " + "(" + p.getRow() + "," + p.getColumn() +").");
+              throw new Exception("You are trying to put "+ bship.getType() + " on "+ board[p.getRow()][p.getColumn()].getType()+" at " + "(" + p.getRow() + "," + p.getColumn() +").");
             }
         }
 
@@ -88,7 +88,7 @@ public class Validator {
         //check if gametool can be placed
         for(Postion p : listOfGameToolCoordinates) {
             if(isGameToolArroundCoordinate(p.getRow(), p.getColumn(), board , listOfGameToolCoordinates)) {
-                throw new Exception("Cannot place "+ bship.getSpecies() +" at (" +p.getRow()+ "," + p.getColumn() +").\n Should be one cell space from other gametools !");
+                throw new Exception("Cannot place "+ bship.getType() +" at (" +p.getRow()+ "," + p.getColumn() +").\n Should be one cell space from other gametools !");
             }
         }
         return true;

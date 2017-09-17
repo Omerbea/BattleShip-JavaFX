@@ -7,8 +7,8 @@ final public class BattleShip extends GameTool {
     private int score ;
     private String direction ;
 
-    public BattleShip(String i_species, String i_type, int i_size, char i_sign, int i_score, String i_shipDirection){
-        super(i_species , i_type , i_sign ,i_score , i_size);
+    public BattleShip(String category ,String i_id, int i_size, char i_sign, int i_score, String i_shipDirection){
+        super(category, i_id , i_sign ,i_score , i_size);
         score = i_score ;
         direction = i_shipDirection;
     }
