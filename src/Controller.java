@@ -16,6 +16,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -56,6 +59,7 @@ public class Controller extends Application  {
     @FXML GridPane rightBoard;
     @FXML GridPane leftBoard;
     @FXML GridPane rivalShipsGridPane;
+    @FXML ImageView mineImage;
     Label gameLoadedLabel;
     GameManager battleShipGame = new GameManager();
 /*    SimpleStringProperty propcurrentPlayerName = new SimpleStringProperty();
@@ -231,7 +235,7 @@ public class Controller extends Application  {
                 //print amount per shipType
                 Label amountShip = new Label();
                 amountShip.setText(Integer.toString(shipByType.size()));
-                rivalShipsGridPane.add(amountShip, , k);
+                //rivalShipsGridPane.add(amountShip, , k);
             }
             Label space = new Label();
             space.setPrefSize(10,10);
@@ -282,6 +286,7 @@ public class Controller extends Application  {
                     } else {
                         btn.setDisable(true);
                         btn.setStyle("-fx-opacity: 1.0 ;");
+                       // btn.setOnMouseReleased();
                     }
                     board.add(btn, i, j);
                 }
@@ -300,6 +305,7 @@ public class Controller extends Application  {
     @FXML
     public void loadFileHandler() {
      /*   try {
+
             battleShipGame.isFileValid("C:\\BattleShip\\Battleship\\resources\\battleShip_5_basic.xml");
         } catch (Exception e) {
 
@@ -319,5 +325,15 @@ public class Controller extends Application  {
             alert.showAndWait();
            System.out.println(e.getMessage());
         }
+
+    }
+
+    public void imageDropped(MouseEvent dragEvent) {
+
+        System.out.println(dragEvent.getTarget().toString());
+    }
+
+    public void imageDragOver(MouseEvent dragEvent) {
+        System.out.println("drag");
     }
 }

@@ -4,6 +4,7 @@ import GameParser.BattleShipGame.ShipTypes.ShipType;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 public class Factory {
     BattleShipGame GameData;
@@ -36,6 +37,7 @@ public class Factory {
             Map<String, LinkedList<GameTool>> playerGameTools = new HashMap<>();
             GameTool[][] board = initPlayerBoard(GameData.getBoards().getBoard().get(player).getShip() , player + 1 , playerGameTools);
             PlayersArray[player] = new Player("Player" + (player + 1), GameData.getBoardSize(), board, GameData.getBoards().getBoard().get(player).getShip().size() , playerGameTools , numberOfMines);
+
         }
         return PlayersArray;
     }
@@ -230,13 +232,18 @@ public class Factory {
         } else {
             LinkedList<GameTool> tools = new LinkedList<>();
             tools.add(bship);
-            playerGameTools.put(bship.getType() , tools);
+            playerGameTools.put(getCategoryByShipType(bship.getType()), tools);
         }
         //need to support advanced game
 
         if(!isFormatSupported){throw new Exception(shipDirection + " direction is not supported!");}
 
 
+    }
+
+    private String getCategoryByShipType(String type) {
+         return GameData.getShipTypes().getShipType().stream()
+                .filter(t -> t.getId().equals(type)).map(t -> t.getCategory()).collect(Collectors.toList()).get(0);
     }
 
     public int getScoreByShipTypeId(String id) {

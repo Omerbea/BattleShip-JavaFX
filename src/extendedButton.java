@@ -11,4 +11,5 @@ public class extendedButton extends Button {
 
     public int getRow () {return row;}
     public int getColumn () {return column;}
+
 }

@@ -81,7 +81,10 @@
                   <Font size="14" />
                </font>
             </Label>
-
+                 <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50" onMouseReleased="#imageDropped"
+                            onMouseDragged="#imageDragOver" >
+                     <Image url="Mine.png"></Image>
+                 </ImageView>
          </children>
       </VBox>
    </right>
@@ -105,11 +108,6 @@
                    <GridPane fx:id="leftBoard" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                        <columnConstraints>
                        </columnConstraints>
-                   </GridPane>
-                   <GridPane>
-                       <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50">
-                           <Image url="Mine.png"></Image>
-                       </ImageView>
                    </GridPane>
                </children>
             </GridPane>
