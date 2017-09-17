@@ -186,6 +186,7 @@ public class Player {
         if (myBoard[row][column].getIsAlive()) {
             //result.add(myBoard[row][column].getSpecies());
             result.add((myBoard[row][column].getType()));
+            result.add((myBoard[row][column].getTypeId()));
         }
         else{
             result.add("beenThere");
