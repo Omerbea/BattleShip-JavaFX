@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
@@ -285,9 +286,9 @@ public class Controller extends Application  {
                         });
                         btn.setStyle("-fx-focus-color: transparent;");
                     } else {
-                        btn.setDisable(true);
+                       //btn.setDisable(true);
                         btn.setStyle("-fx-opacity: 1.0 ;");
-                       // btn.setOnMouseReleased();
+                        //btn.addEventFilter(MouseDragEvent.MOUSE_DRAG_RELEASED , dragHandelr());
                     }
                     board.add(btn, i, j);
                 }
@@ -296,6 +297,7 @@ public class Controller extends Application  {
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
 
         }
+
 
     private void executeMoveHandler(int row, int column) {
         battleShipGame.executeMove(column,row);

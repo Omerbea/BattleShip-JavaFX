@@ -227,8 +227,8 @@ public class Factory {
             isFormatSupported = true;
         }
 
-        if(playerGameTools.containsKey(bship.getType())) {
-            playerGameTools.get(bship.getType()).add(bship);
+        if(playerGameTools.containsKey(getCategoryByShipType(bship.getType()))) {
+            playerGameTools.get(getCategoryByShipType(bship.getType())).add(bship);
         } else {
             LinkedList<GameTool> tools = new LinkedList<>();
             tools.add(bship);
