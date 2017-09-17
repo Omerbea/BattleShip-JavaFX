@@ -81,8 +81,7 @@
                   <Font size="14" />
                </font>
             </Label>
-                 <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50" onMouseReleased="#imageDropped"
-                            onMouseDragged="#imageDragOver" >
+                 <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50" onMouseDragged="#dragHandler" >
                      <Image url="Mine.png"></Image>
                  </ImageView>
          </children>
