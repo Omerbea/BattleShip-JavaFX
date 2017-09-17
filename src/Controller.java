@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Controller extends Application  {
@@ -58,6 +59,7 @@ public class Controller extends Application  {
     @FXML Label rivalNumOfTurnsLabel ;
     @FXML GridPane rightBoard;
     @FXML GridPane leftBoard;
+    @FXML GridPane rivalShipsGridPane;
     @FXML ImageView mineImage;
     Label gameLoadedLabel;
     GameManager battleShipGame = new GameManager();
@@ -68,6 +70,7 @@ public class Controller extends Application  {
     SimpleStringProperty propScorePlayer = new SimpleStringProperty();
     SimpleStringProperty propNumOfHits = new SimpleStringProperty();*/
 
+    int whoPlay =0;
     extendedButton [][]player1Board;
     extendedButton [][]player2Board;
 
@@ -79,6 +82,7 @@ public class Controller extends Application  {
     public void restartGameHandler(){
         battleShipGame.restartGame();
         //TODO: restart UI
+
     }
 
     @FXML
@@ -99,29 +103,29 @@ public class Controller extends Application  {
     //TODO: back the comment below to be active. I comment this only for tests
     //private void printBaordsAndMenu(String name, char[][] boardOne, char[][] boardTwo, int score, List<String> menu){
     private void BindStatistics2Ui(){
-        int whoPlayer =0;
+
         //Player Name
         currentPlayerNameLabel.textProperty().bind(Bindings.selectString(battleShipGame.propWhoPlayProperty()));
         if (battleShipGame.propWhoPlayProperty().getName() == "Player 2"){
-            whoPlayer = 1;
+            whoPlay = 1;
         }
     //Current Player
         // score
-        scorePlayerLabel.textProperty().bind(Bindings.concat("Score: " ,battleShipGame.propScoreCurrentPlayer(whoPlayer).getValue()));
+        scorePlayerLabel.textProperty().bind(Bindings.concat("Score: " ,battleShipGame.propScoreCurrentPlayer(whoPlay).getValue()));
         //Hit
-        numOfHitsLabel.textProperty().bind(Bindings.concat("Hits: " , battleShipGame.propHitCurrentPlayer(whoPlayer).getValue()));
+        numOfHitsLabel.textProperty().bind(Bindings.concat("Hits: " , battleShipGame.propHitCurrentPlayer(whoPlay).getValue()));
         //Miss
-        numOfmissLabel.textProperty().bind(Bindings.concat("Miss: ", battleShipGame.propMissCurrntPlayer(whoPlayer).getValue()));
+        numOfmissLabel.textProperty().bind(Bindings.concat("Miss: ", battleShipGame.propMissCurrntPlayer(whoPlay).getValue()));
         //Average Turn Time
-        averageTimeTurnLabel.textProperty().bind(Bindings.concat("Average Time for Turn: " , battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlayer).getValue()));
+        averageTimeTurnLabel.textProperty().bind(Bindings.concat("Average Time for Turn: " , battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlay).getValue()));
         //Number Of Turns
-        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlayer).getValue()));
+        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlay).getValue()));
     //Raivel Player
         //Title rival
         rivalPlayerDetailsLabel.setText("Rival Details");
         //num Mines
         //TODO: add mines to the bind
-        rivalNumMines.textProperty().bind(Bindings.concat("Mines: " ));
+        rivalNumMines.textProperty().bind(Bindings.concat("Mines: " , battleShipGame.getNumOfMinesFromPlayer(1-whoPlay)));
         /*
         // Mines
         .textProperty().bind(Bindings.selectString(battleShipGame.propScoreCurrentPlayer(1- whoPlayer)));
@@ -145,7 +149,7 @@ public class Controller extends Application  {
             BindStatistics2Ui();
             drawUiBoard(leftBoard);
             drawUiBoard(rightBoard);
-
+            drawRivalShips();
             //TODO: drag and drop mins
         }
         else{
@@ -175,6 +179,73 @@ public class Controller extends Application  {
 
     }
 
+    private int getMaxSizeShip(Map<String, LinkedList<GameTool>> gameTools){
+        int max =0 ;
+        for (Map.Entry<String, LinkedList<GameTool>> item : gameTools.entrySet()){
+            if (max < item.getValue().getFirst().getSize()){
+                
+            }
+        }
+        return max;
+    }
+
+    private void drawRivalShips(){
+        Map<String, LinkedList<GameTool>> gameTools = battleShipGame.getGameTool(this.whoPlay);
+        //count how many cell need in the grid.
+        int howManycellGrid = 0;
+        int i =0;
+        int k =0;
+        int maxSizeShip = getMaxSizeShip ( gameTools);
+        //for each type tool
+        for (Map.Entry<String, LinkedList<GameTool>> item : gameTools.entrySet()){
+            LinkedList <GameTool> shipByType = item.getValue();
+            k = i;
+            if (item.getKey() == "L_SHAPE") {
+
+                //for size of ship. rival ship present by buttons
+                for (int j = 0; j < shipByType.getFirst().getSize(); j++) {
+
+                    Button buttonRow = new Button();
+                    buttonRow.setPrefSize(10, 10);
+                    rivalShipsGridPane.add(buttonRow, 0, i);
+                    System.out.print(" 0," + Integer.toString(i) + " ");
+                    if (i == 0 && i == 0) {
+                        i++;
+                        continue;
+                    }
+                    Button buttonColumn = new Button();
+                    buttonColumn.setPrefSize(10, 10);
+
+                    rivalShipsGridPane.add(buttonColumn, j, k);
+                    System.out.print(" " + Integer.toString(j) + "," + Integer.toString(k));
+                    i++;
+
+                }
+                //print amount per shipType
+                Label amountShip = new Label();
+                amountShip.setText(Integer.toString(shipByType.size()));
+                rivalShipsGridPane.add(amountShip, i, i);
+            }
+            else{
+                for (int indexButton=0;indexButton < shipByType.getFirst().getSize(); indexButton++){
+                    Button buttonColumn = new Button();
+                    buttonColumn.setPrefSize(10,10);
+                    rivalShipsGridPane.add(buttonColumn,indexButton,k);
+                    i+=1;
+                }
+                //print amount per shipType
+                Label amountShip = new Label();
+                amountShip.setText(Integer.toString(shipByType.size()));
+                //rivalShipsGridPane.add(amountShip, , k);
+            }
+            Label space = new Label();
+            space.setPrefSize(10,10);
+            rivalShipsGridPane.add(space,0,i);
+            i+=1;
+            // for space between two type of ships
+        }
+
+    }
 
     private void drawUiBoard(GridPane board) {
         LinkedList<ColumnConstraints> columnConstraints = new LinkedList<>();
@@ -235,7 +306,8 @@ public class Controller extends Application  {
 
     @FXML
     public void loadFileHandler() {
-/*        try {
+     /*   try {
+
             battleShipGame.isFileValid("C:\\BattleShip\\Battleship\\resources\\battleShip_5_basic.xml");
         } catch (Exception e) {
 
@@ -255,6 +327,7 @@ public class Controller extends Application  {
             alert.showAndWait();
            System.out.println(e.getMessage());
         }
+
     }
 
     public void imageDropped(MouseEvent dragEvent) {

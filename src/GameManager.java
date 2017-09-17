@@ -7,10 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import sun.applet.Main;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 //comment1--
 public class GameManager {
@@ -79,7 +76,13 @@ public class GameManager {
         return players[player].propNumOfTurnsCurrentPlayer();
     }
 
+    public int getNumOfMinesFromPlayer (int player){
+        return this.players[player].getNumOfMines();
+    }
 
+    public Map<String, LinkedList<GameTool>>  getGameTool (int player){
+        return this.players[player].getPlayerGameTools();
+    }
 
   private void  setMainMenu(){
         this.mainMenu.add("read file");  //1

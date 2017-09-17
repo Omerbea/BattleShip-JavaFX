@@ -42,6 +42,9 @@
                   <Font size = "14" />
                </font>
             </Label>
+            <GridPane fx:id="rivalShipsGridPane">
+
+            </GridPane>
          </children>
       </VBox>
    </left>
