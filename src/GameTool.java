@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class GameTool {
 
     private String category;
+    private String typeId;
     private String type;
     private char sign;
     int score;
@@ -14,9 +15,10 @@ public abstract class GameTool {
     private boolean isAlive = true;
     ArrayList<Position>  positionsHited = new ArrayList<>();
 
-    public GameTool( String i_category , String i_type, char i_sign, int i_score, int i_size ) {
+    public GameTool( String i_category , String i_typeId, char i_sign, int i_score, int i_size , String i_type) {
         category = i_category;
-        type = i_type;
+        typeId = i_typeId;
+        this.type = i_type;
         sign = i_sign;
         score = i_score;
         size = i_size;
@@ -37,7 +39,7 @@ public abstract class GameTool {
 
 
     public String getType() {
-        return type;
+        return this.typeId;
     }
 
     public int getScore() {

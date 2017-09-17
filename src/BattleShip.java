@@ -6,10 +6,11 @@ final public class BattleShip extends GameTool {
 
     private int score ;
     private String direction ;
-
+    private int sizeForLive ;
     public BattleShip(String category ,String i_id, int i_size, char i_sign, int i_score, String i_shipDirection){
-        super(category, i_id , i_sign ,i_score , i_size);
+        super(category, i_id , i_sign ,i_score , i_size, "battleShip");
         score = i_score ;
+        this.sizeForLive = (i_size * 2 )- 1;
         direction = i_shipDirection;
     }
 
@@ -22,9 +23,9 @@ final public class BattleShip extends GameTool {
             System.out.print("ERROR: BattleShip.updateHitMe() -  size = 0 ");
             //TODO: THROW EXCEPTION
         }
-        size--;
+        this.sizeForLive--;
         positionsHited.add(position);
-        if (size == 0){
+        if (this.sizeForLive == 0){
             super.setAlive(false);
             return true;
         }
