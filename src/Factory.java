@@ -20,7 +20,7 @@ public class Factory {
     }
 
     public Player[] createPlayers() throws Exception {
-        Map<String, LinkedList<GameTool>> playerGameTools = new HashMap<>();
+
         //Validation pahse :
         try {
             GameDataValidator.ValidateShipTypes(GameData.getShipTypes().getShipType() , GameData.getBoards().getBoard());
@@ -33,10 +33,9 @@ public class Factory {
         int numberOfMines = GameData.getMine().getAmount();
 
         for(int player = 0 ; player < 2 ; player++) {
+            Map<String, LinkedList<GameTool>> playerGameTools = new HashMap<>();
             GameTool[][] board = initPlayerBoard(GameData.getBoards().getBoard().get(player).getShip() , player + 1 , playerGameTools);
             PlayersArray[player] = new Player("Player" + (player + 1), GameData.getBoardSize(), board, GameData.getBoards().getBoard().get(player).getShip().size() , playerGameTools , numberOfMines);
-            playerGameTools.clear();
-
         }
         return PlayersArray;
     }

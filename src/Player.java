@@ -127,6 +127,10 @@ public class Player {
     private PlayerStatistics playerStatistics = new PlayerStatistics();
     private Map<String , LinkedList<GameTool>> playerGameTools = new HashMap<String , LinkedList<GameTool>>();
 
+    public Map<String, LinkedList<GameTool>> getPlayerGameTools() {
+        return this.playerGameTools;
+    }
+
     public int getNumOfMines (){
         return this.playerStatistics.getNumofMines();
     }
