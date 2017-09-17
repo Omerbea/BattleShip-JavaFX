@@ -181,8 +181,9 @@ public class Controller extends Application  {
     private int getMaxSizeShip(Map<String, LinkedList<GameTool>> gameTools){
         int max =0 ;
         for (Map.Entry<String, LinkedList<GameTool>> item : gameTools.entrySet()){
-            if (max < item.getValue().getFirst().getSize()){
-                
+            int currSizeShip = item.getValue().getFirst().getSize();
+            if (max < currSizeShip){
+                max = currSizeShip;
             }
         }
         return max;
@@ -199,7 +200,7 @@ public class Controller extends Application  {
         for (Map.Entry<String, LinkedList<GameTool>> item : gameTools.entrySet()){
             LinkedList <GameTool> shipByType = item.getValue();
             k = i;
-            if (item.getKey() == "L_SHAPE") {
+            if (item.getKey().equals("L_SHAPE") ) {
 
                 //for size of ship. rival ship present by buttons
                 for (int j = 0; j < shipByType.getFirst().getSize(); j++) {
@@ -235,7 +236,7 @@ public class Controller extends Application  {
                 //print amount per shipType
                 Label amountShip = new Label();
                 amountShip.setText(Integer.toString(shipByType.size()));
-                //rivalShipsGridPane.add(amountShip, , k);
+                rivalShipsGridPane.add(amountShip, maxSizeShip, k );
             }
             Label space = new Label();
             space.setPrefSize(10,10);
