@@ -37,9 +37,12 @@ public abstract class GameTool {
         return this.isAlive;
     }
 
-
     public String getType() {
-        return this.typeId;
+        return type;
+    }
+
+    public String getTypeId() {
+        return typeId;
     }
 
     public int getScore() {

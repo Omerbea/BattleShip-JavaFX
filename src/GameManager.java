@@ -308,11 +308,11 @@ public class GameManager {
                     backToMainMenu("You miss :( ");
                 }
                 return true;
-            case "Ship":
+            case "battleShip":
                 if (mine){
                     userInterface.printMassage("player " + (player +1) + " you mine hit in a ship! wall done!");
                 }
-                players[player].updateIHitMyTurn(coordinates.get(0), coordinates.get(1), gameToolType.get(1), factory.getScoreByShipTypeId(gameToolType.get(1)));
+                players[player].updateIHitMyTurn(coordinates.get(0), coordinates.get(1), gameToolType.get(0), factory.getScoreByShipTypeId(gameToolType.get(0)));
                 String msg = players[1-player].updateHitMe(coordinates , false);
                 if (msg == "Game Over"){
                     this.finishTheGame();

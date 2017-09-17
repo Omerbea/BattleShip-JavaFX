@@ -166,7 +166,7 @@ public class Factory {
 
 
         if(!GameDataValidator.canGameToolBePlaced(bship , board)) {
-            throw new Exception("Problem placing : " + bship.getType() + " in board . \n row : " + (bship.getRow() + 1) + " column : " + (bship.getColumn() + 1) + " \n");
+            throw new Exception("Problem placing : " + bship.getTypeId() + " in board . \n row : " + (bship.getRow() + 1) + " column : " + (bship.getColumn() + 1) + " \n");
         }
 
 
@@ -227,12 +227,12 @@ public class Factory {
             isFormatSupported = true;
         }
 
-        if(playerGameTools.containsKey(getCategoryByShipType(bship.getType()))) {
-            playerGameTools.get(getCategoryByShipType(bship.getType())).add(bship);
+        if(playerGameTools.containsKey(getCategoryByShipType(bship.getTypeId()))) {
+            playerGameTools.get(getCategoryByShipType(bship.getTypeId())).add(bship);
         } else {
             LinkedList<GameTool> tools = new LinkedList<>();
             tools.add(bship);
-            playerGameTools.put(getCategoryByShipType(bship.getType()), tools);
+            playerGameTools.put(getCategoryByShipType(bship.getTypeId()), tools);
         }
         //need to support advanced game
 
