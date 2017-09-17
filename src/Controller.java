@@ -1,3 +1,4 @@
+import com.sun.prism.paint.Color;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -331,27 +333,31 @@ public class Controller extends Application  {
         }
 
     private void setDragAndDropTargetMine(extendedButton btn) {
+        btn.setOnDragExited(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                // change back to original color
+                ColorAdjust color = new ColorAdjust();
+                color.setBrightness(0);
+                btn.setEffect(color);
+                event.consume();
+            }
+
+        });
 
         btn.setOnDragEntered(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
                 if(event.getGestureSource() != btn /*TODO : for another drag*/) {
-//                    System.out.println(btn.getColumn() + " " + btn.getRow());
-  //                  btn.setText("$$");
+                    ColorAdjust color = new ColorAdjust();
+                    color.setBrightness(-0.5);
+                    btn.setEffect(color);
                 }
                 event.consume();
             }
 
         });
 
-        btn.setOnDragExited(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                // change back to original color
-                event.consume();
-            }
-
-        });
 
 
         btn.setOnDragDone(new EventHandler<DragEvent>() {
