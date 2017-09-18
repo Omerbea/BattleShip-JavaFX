@@ -63,7 +63,7 @@ public class GameManager {
         return players[player].propScoreCurrentPlayer();
     }
     public SimpleStringProperty propHitCurrentPlayer(int player){
-        return players[player].propScoreCurrentPlayer();
+        return players[player].propHitCurrentPlayer();
     }
     public SimpleStringProperty propAverageTimeTurnCurrentPlayer(int player){
         return players[player].propAverageTimeTurnCurrentPlayer();
@@ -312,8 +312,13 @@ public class GameManager {
                 if (mine){
                     userInterface.printMassage("player " + (player +1) + " you mine hit in a ship! wall done!");
                 }
-                players[player].updateIHitMyTurn(coordinates.get(0), coordinates.get(1), gameToolType.get(0), factory.getScoreByShipTypeId(gameToolType.get(0)));
                 String msg = players[1-player].updateHitMe(coordinates , false);
+                int tmpScore =0;
+                if (msg.contains("destroyed")){
+                    tmpScore = factory.getScoreByShipTypeId(gameToolType.get(1));
+                }
+                players[player].updateIHitMyTurn(coordinates.get(0), coordinates.get(1), gameToolType.get(0),tmpScore);
+
                 if (msg == "Game Over"){
                     this.finishTheGame();
                 }
