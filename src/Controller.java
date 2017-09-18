@@ -104,24 +104,28 @@ public class Controller extends Application  {
     }
     //TODO: back the comment below to be active. I comment this only for tests
     //private void printBaordsAndMenu(String name, char[][] boardOne, char[][] boardTwo, int score, List<String> menu){
-    private void BindStatistics2Ui(){
+    private void bindStatistics2Ui(){
 
         //Player Name
         currentPlayerNameLabel.textProperty().bind(Bindings.selectString(battleShipGame.propWhoPlayProperty()));
-        if (battleShipGame.propWhoPlayProperty().getName() == "Player 2"){
+
+        if (battleShipGame.propWhoPlayProperty().getValue() == "Player 2"){
             whoPlay = 1;
+        }
+        else{
+            whoPlay =0;
         }
     //Current Player
         // score
-        scorePlayerLabel.textProperty().bind(Bindings.concat("Score: " ,battleShipGame.propScoreCurrentPlayer(whoPlay).getValue()));
+        scorePlayerLabel.textProperty().bind(Bindings.concat("Score: " ,battleShipGame.propScoreCurrentPlayer(whoPlay)));
         //Hit
-        numOfHitsLabel.textProperty().bind(Bindings.concat("Hits: " , battleShipGame.propHitCurrentPlayer(whoPlay).getValue()));
+        numOfHitsLabel.textProperty().bind(Bindings.concat( "Hits: ", battleShipGame.propHitCurrentPlayer(whoPlay)));
         //Miss
-        numOfmissLabel.textProperty().bind(Bindings.concat("Miss: ", battleShipGame.propMissCurrntPlayer(whoPlay).getValue()));
+        numOfmissLabel.textProperty().bind(Bindings.concat("Miss: ", battleShipGame.propMissCurrntPlayer(whoPlay)));
         //Average Turn Time
-        averageTimeTurnLabel.textProperty().bind(Bindings.concat("Average Time for Turn: " , battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlay).getValue()));
+        averageTimeTurnLabel.textProperty().bind(Bindings.concat("Average Time for Turn: " , battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlay)));
         //Number Of Turns
-        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlay).getValue()));
+        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlay)));
     //Raivel Player
         //Title rival
         rivalPlayerDetailsLabel.setText("Rival Details");
@@ -148,7 +152,7 @@ public class Controller extends Application  {
     @FXML
     public void startGameHandler() throws IOException {
         if (battleShipGame.gameStart()){
-            BindStatistics2Ui();
+            bindStatistics2Ui();
             drawUiBoard(leftBoard);
             drawUiBoard(rightBoard);
             drawRivalShips();
@@ -401,6 +405,7 @@ public class Controller extends Application  {
         battleShipGame.executeMove(column,row);
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
+        this.bindStatistics2Ui();
     }
 
     @FXML

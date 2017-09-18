@@ -68,6 +68,7 @@ public class Player {
 
         public void incHits (){
             this.hits += 1;
+            String test = String.valueOf(this.hits);
             propHitCurrentPlayer.set(String.valueOf(this.hits));
         }
 
@@ -257,8 +258,8 @@ public class Player {
         if (! this.myBoard[position.row][position.column].getIsAlive()){
             numOfShip -= 1;
             //check if game over
-            if (numOfShip == 0){
-                return "Game Over";
+            if (numOfShip <= 0){
+                return "You destroyed the last ship, well done! Game Over...";
             }
             return "You destroyed a ship !!";
 
