@@ -127,7 +127,7 @@ public class Controller extends Application  {
         //Average Turn Time
         averageTimeTurnLabel.textProperty().bind(Bindings.concat("Average Time for Turn: " , battleShipGame.propAverageTimeTurnCurrentPlayer(whoPlay)));
         //Number Of Turns
-        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlay)));
+        numOfTurnsLabel.textProperty().bind(Bindings.concat( "Number of Turns: ", battleShipGame.propNumOfTurnsCurrentPlayer(whoPlay)));
     //Raivel Player
         //Title rival
         rivalPlayerDetailsLabel.setText("Rival Details");

@@ -63,6 +63,7 @@ public class Player {
             String hms = String.format("%02d:%02d",
                     TimeUnit.NANOSECONDS.toMinutes(this.avargeTimeTurn) - TimeUnit.HOURS.toMinutes(TimeUnit.NANOSECONDS.toHours(this.avargeTimeTurn)),
                     TimeUnit.NANOSECONDS.toSeconds(this.avargeTimeTurn) - TimeUnit.NANOSECONDS.toSeconds(TimeUnit.NANOSECONDS.toMinutes(this.avargeTimeTurn)));
+            //hms.replaceFirst("^0+(?!$)", "");
             return hms;
         }
 
@@ -86,7 +87,8 @@ public class Player {
                 long test = (this.timeTurn)/(this.turns);
                 this.avargeTimeTurn = test;
             }
-            propAverageTimeTurnCurrentPlayer.set(String.valueOf(this.avargeTimeTurn));
+            propAverageTimeTurnCurrentPlayer.set(getAverageTimeTurn());
+            System.out.print(getAverageTimeTurn());
             propNumOfTurnsCurrentPlayer.set(String.valueOf(this.turns));
         }
 

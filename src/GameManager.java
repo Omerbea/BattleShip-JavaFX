@@ -41,7 +41,8 @@ public class GameManager {
     private Player []players;
     private int whoPlay =0;
     private SimpleStringProperty propWhoPlay = new SimpleStringProperty("Player 1");
-
+    private long finishTime = 0;
+    private long startTime =0;
 
 
     public SimpleStringProperty propWhoPlayProperty() {
@@ -259,8 +260,6 @@ public class GameManager {
     }
 
     public boolean executeMove(int row , int column) {
-        long finishTime = 0;
-        long startTime =0;
         ArrayList<Integer> coordinates = new ArrayList<>();
         coordinates.add(0 , row);
         coordinates.add(1 , column);
@@ -279,7 +278,10 @@ public class GameManager {
             userInterface.printMassage("You guessed already this cooredinates. try again..");*/
 
         //Validator
+        finishTime = System.nanoTime();
         long deltaTime = finishTime - startTime ;
+        //For the next turn;
+        startTime = System.nanoTime();
         players[whoPlay].setAvargeTimeTurn(deltaTime);
         gameStatistic.incrementTurn();
 
@@ -359,6 +361,7 @@ public class GameManager {
         return true;
     }
     private  void changePlayer (){
+
         whoPlay = 1- whoPlay;
         if (whoPlay == 0){
             this.propWhoPlay.set("Player 1");
@@ -366,6 +369,7 @@ public class GameManager {
         else{
             this.propWhoPlay.set("Player 2");
         }
+        startTime = System.nanoTime();
     }
 
 
@@ -380,8 +384,9 @@ public class GameManager {
             backToMainMenu("game already run.");
             return false;
         }
-        this.isGameRun = true;
 
+        this.isGameRun = true;
+        this.startTime = System.nanoTime();
         // for Ex2 we mark the line below
         //this.showStatusGame();
         return  true;
