@@ -14,7 +14,8 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+
    <bottom>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 25;" BorderPane.alignment="CENTER">
          <children>
@@ -30,9 +31,9 @@
       </HBox>
    </bottom>
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" >
+      <VBox prefHeight="200.0" prefWidth="170.0" BorderPane.alignment="CENTER_RIGHT" maxWidth="Infinity" maxHeight="Infinity" spacing="2">
          <children>
-            <Label fx:id="rivalPlayerDetailsLabel" alignment="CENTER" prefHeight="15.0" prefWidth="192.0" text="" textAlignment="CENTER">
+            <Label fx:id="rivalPlayerDetailsLabel" alignment="CENTER" prefHeight="15.0" prefWidth="250" text="" textAlignment="CENTER">
             <font>
                <Font size = "14" />
             </font>
@@ -42,14 +43,16 @@
                   <Font size = "14" />
                </font>
             </Label>
-            <GridPane fx:id="rivalShipsGridPane">
 
-            </GridPane>
          </children>
+
+      <GridPane fx:id="rivalShipsGridPane" alignment="CENTER">
+            </GridPane>
       </VBox>
+
    </left>
    <right>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="170.0" maxWidth="Infinity" maxHeight="Infinity" BorderPane.alignment="CENTER_LEFT">
          <children>
             <Label fx:id="currentPlayerNameLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                     <font>
@@ -81,20 +84,22 @@
                   <Font size="14" />
                </font>
             </Label>
+            <GridPane alignment="CENTER">
                  <ImageView fx:id="mineImage" fitHeight="50" fitWidth="50" onMouseDragged="#dragHandler" >
                      <Image url="Mine.png"></Image>
                  </ImageView>
+            </GridPane>
          </children>
       </VBox>
    </right>
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" >
+      <StackPane prefHeight="100.0" prefWidth="200.0" alignment="CENTER" >
          <children>
             <GridPane prefHeight="212.0" prefWidth="402.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="165.0" minWidth="10.0" prefWidth="165.0" />
-                <ColumnConstraints hgrow="ALWAYS" maxWidth="128.0" minWidth="10.0" prefWidth="53.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="205.0" minWidth="10.0" prefWidth="182.0" />
+                <ColumnConstraints  hgrow="ALWAYS" maxWidth="Infinity" minWidth="10.0" prefWidth="165.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="200" minWidth="10.0" prefWidth="53.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="10.0" prefWidth="182.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
@@ -110,7 +115,7 @@
                    </GridPane>
                </children>
             </GridPane>
-         </children></HBox>
+         </children></StackPane>
    </center>
    <top>
       <StackPane minWidth="-Infinity" prefHeight="88.0" prefWidth="431.0" BorderPane.alignment="CENTER">

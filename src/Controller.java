@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +28,7 @@ import javafx.stage.Stage;
 import sun.text.normalizer.UCharacterProperty;
 
 import javax.naming.Binding;
+import java.io.DataOutput;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -379,7 +381,12 @@ public class Controller extends Application  {
 
                 if(db.hasImage()) {
                     //TODO : set mine image
-                    System.out.println(btn.getColumn() + " " + btn.getRow());
+                    try {
+                        battleShipGame.addMine(btn.getColumn(), btn.getRow());
+                        fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
+                    } catch (Exception e) {
+                        System.out.println("problem with mine");
+                    }
                     sucess = true ;
                 }
                 event.setDropCompleted(sucess);

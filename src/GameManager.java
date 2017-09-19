@@ -138,7 +138,7 @@ public class GameManager {
                     this.restartGame();
                     break;
                 case 7:
-                    this.addMine();
+                   // this.addMine();
                     break;
                 case 8:
                     this.quiteGame();
@@ -180,8 +180,8 @@ public class GameManager {
         return true;
     }
 
-    private  boolean addMine (){
-        if (!this.isGameRun){
+    public boolean addMine (int row , int column) throws Exception {
+/*        if (!this.isGameRun){
             backToMainMenu("cannot add mine when no game run...");
             return  false;
         }
@@ -190,31 +190,29 @@ public class GameManager {
             return false;
         }
         while (true) {
-            userInterface.printMassage("please insert coordinates ");
+            userInterface.printMassage("please insert coordinates ");*/
             Mine mine = new Mine("Mine");
-            try {   
+/*            try {
                 ArrayList<Integer> coordinates = userInterface.waitForCoordinates();
                 //Fixing user row to start from 0
                 coordinates.set(0 , coordinates.get(0) - 1);
                 if ( !validator.isCordinateInRange(coordinates.get(0)) || ! validator.isCordinateInRange((coordinates.get(1)))){
                     userInterface.printMassage("the coordinates not in the range, please try anther coordinates in range...");
                     continue;
-                }
+                }*/
 
-                mine.setCoordinates(coordinates.get(0), coordinates.get(1));
+                mine.setCoordinates(row,column);
+
                 // check if mine can be set there
 
+
                 if (validator.canGameToolBePlaced(mine, players[whoPlay].myBoard)) {
-                    if (players[whoPlay].setMine(coordinates.get(0), coordinates.get(1))) {
-                        backToMainMenu("set mine! ");
-                        break;
+                    if (players[whoPlay].setMine(row, column)) {
+                        //backToMainMenu("set mine! ");
+                        //break;
                     }
-                    userInterface.printMassage(" canot set Mine in these place. please insert new coordinates... ");
-                }
-            }
-            catch (Exception e){
-                userInterface.printMassage(e.getMessage());
-            }
+                userInterface.printMassage(" canot set Mine in these place. please insert new coordinates... ");
+
         }
         return true;
     }
