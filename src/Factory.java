@@ -227,12 +227,12 @@ public class Factory {
             isFormatSupported = true;
         }
 
-        if(playerGameTools.containsKey(getCategoryByShipType(bship.getTypeId()))) {
-            playerGameTools.get(getCategoryByShipType(bship.getTypeId())).add(bship);
+        if(playerGameTools.containsKey(getTypeIdByShipType(bship.getTypeId()))) {
+            playerGameTools.get(getTypeIdByShipType(bship.getTypeId())).add(bship);
         } else {
             LinkedList<GameTool> tools = new LinkedList<>();
             tools.add(bship);
-            playerGameTools.put(getCategoryByShipType(bship.getTypeId()), tools);
+            playerGameTools.put(getTypeIdByShipType(bship.getTypeId()), tools);
         }
         //need to support advanced game
 
@@ -241,9 +241,14 @@ public class Factory {
 
     }
 
-    private String getCategoryByShipType(String type) {
+    private String getCategoryByShipType(String shipTypeId) {
+        return GameData.getShipTypes().getShipType().stream()
+                .filter(t -> t.getId().equals(shipTypeId)).map(t -> t.getCategory()).collect(Collectors.toList()).get(0);
+    }
+
+    private String getTypeIdByShipType(String type) {
          return GameData.getShipTypes().getShipType().stream()
-                .filter(t -> t.getId().equals(type)).map(t -> t.getCategory()).collect(Collectors.toList()).get(0);
+                .filter(t -> t.getId().equals(type)).map(t -> t.getId()).collect(Collectors.toList()).get(0);
     }
 
     public int getScoreByShipTypeId(String id) {
