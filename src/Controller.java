@@ -231,6 +231,7 @@ public class Controller extends Application  {
     }
 
     private void drawRivalShips(){
+        rivalShipsGridPane.getChildren().clear();
         Map<String, LinkedList<GameTool>> gameTools = battleShipGame.getGameTool(this.whoPlay);
         //count how many cell need in the grid.
         int howManycellGrid = 0;
@@ -409,12 +410,23 @@ public class Controller extends Application  {
 
 
     private void executeMoveHandler(int row, int column) {
-        battleShipGame.executeMove(column,row);
+        String result = battleShipGame.executeMove(column,row);
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
-        this.bindStatistics2Ui();
+        this.drawRivalShips();
+
     }
 
+    private void updateRivalDetails(String ship){
+        if (ship != null){
+            updateShipDestroyed(ship);
+        }
+    }
+
+    private void updateShipDestroyed (String ship){
+
+
+    }
     @FXML
     public void loadFileHandler() {
      /*   try {

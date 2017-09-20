@@ -190,6 +190,7 @@ public class Player {
             //result.add(myBoard[row][column].getSpecies());
             result.add((myBoard[row][column].getType()));
             result.add((myBoard[row][column].getTypeId()));
+            result.add(myBoard[row][column].getCategory());
         }
         else{
             result.add("beenThere");

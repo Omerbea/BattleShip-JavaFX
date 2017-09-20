@@ -24,6 +24,10 @@ public abstract class GameTool {
         size = i_size;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public void setAlive(boolean alive) {
         isAlive = alive;
     }

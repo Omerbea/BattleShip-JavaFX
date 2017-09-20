@@ -259,7 +259,7 @@ public class GameManager {
                 userInterface.printMenu(this.mainMenu, "middel");
     }
 
-    public boolean executeMove(int row , int column) {
+    public String executeMove(int row , int column) {
         ArrayList<Integer> coordinates = new ArrayList<>();
         coordinates.add(0 , row);
         coordinates.add(1 , column);
@@ -286,16 +286,16 @@ public class GameManager {
         gameStatistic.incrementTurn();
 
         ArrayList <String> gameToolType = players[1- whoPlay].whoFindThere(coordinates.get(0), coordinates.get(1));
-        executeByTypeTool (gameToolType , coordinates , whoPlay, false);
+        String res= executeByTypeTool (gameToolType , coordinates , whoPlay, false);
         showStatusGame();
 
-        return true;
+        return res;
     }
 
     private  boolean checkIfgGuessed(ArrayList<Integer> coordinates){
          return players[whoPlay].rivalBoard[coordinates.get(0)][ coordinates.get(1)] != 0;
     }
-    private boolean executeByTypeTool (ArrayList<String> gameToolType , ArrayList<Integer> coordinates , int player, boolean mine) {
+    private String executeByTypeTool (ArrayList<String> gameToolType , ArrayList<Integer> coordinates , int player, boolean mine) {
         switch (gameToolType.get(0)) {
             case "non":
                 players[player].updateIMissMyTurn(coordinates.get(0), coordinates.get(1));
@@ -307,7 +307,7 @@ public class GameManager {
                 else {
                     backToMainMenu("You miss :( ");
                 }
-                return true;
+                return "non";
             case "battleShip":
                 if (mine){
                     userInterface.printMassage("player " + (player +1) + " you mine hit in a ship! wall done!");
@@ -316,6 +316,16 @@ public class GameManager {
                 int tmpScore =0;
                 if (msg.contains("destroyed")){
                     tmpScore = factory.getScoreByShipTypeId(gameToolType.get(1));
+                    // update shipList
+                    Map<String, LinkedList<GameTool>> gameTools = this.getGameTool(whoPlay);
+                    LinkedList<GameTool> gameTool = gameTools.get(gameToolType.get(2));
+                    if (gameTool.size() == 1){
+                        gameTools.remove(gameToolType.get(2));
+                    }
+                    else {
+                        gameTool.removeFirst();
+                    }
+                    //end to update shipList
                 }
                 players[player].updateIHitMyTurn(coordinates.get(0), coordinates.get(1), gameToolType.get(0),tmpScore);
 
@@ -323,14 +333,14 @@ public class GameManager {
                     this.finishTheGame();
                 }
                 backToMainMenu(msg);
-                return  true;
+                return  gameToolType.get(2);
             case "Mine":
 
                 userInterface.printMassage( players[whoPlay].getName() +" You hit in Mine :/");
                 this.executeMine(coordinates, player);
                 backToMainMenu( "");
-                return true ;
-             default: return false;
+                return "Mine" ;
+             default: return "error";
         }
     }
 
