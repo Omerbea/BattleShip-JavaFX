@@ -12,7 +12,7 @@ public class Replay {
     private int rivalMines;
     Map<String, LinkedList<GameTool>> rivalGetGameTool;
     private GameTool[][] board1;
-    private GameTool[][] board2;
+    private char[][] board2;
     private int row;
     private int column ;
 
@@ -40,9 +40,6 @@ public class Replay {
         return board1;
     }
 
-    public GameTool[][] getBoard2() {
-        return board2;
-    }
 
     public void setBoard1(GameTool[][] board1) {
         this.board1 = board1;
@@ -52,7 +49,11 @@ public class Replay {
         this.avergeTimeTurn = avergeTimeTurn;
     }
 
-    public void setBoard2(GameTool[][] board2) {
+    public char[][] getBoard2() {
+        return board2;
+    }
+
+    public void setBoard2(char[][] board2) {
         this.board2 = board2;
     }
 

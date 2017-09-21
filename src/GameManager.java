@@ -316,8 +316,8 @@ public class GameManager {
         else {
             System.out.print("Error in updateCurrentReplay");
         }
-        replay.setBoard1(players[0].myBoard);
-        replay.setBoard2(players[1].myBoard);
+        replay.setBoard1(players[whoPlay].myBoard);
+        replay.setBoard2(players[whoPlay].rivalBoard);
     }
 
     public Replay getPrevReplayTurn (){

@@ -158,7 +158,7 @@ public class Controller extends Application  {
             bindStatistics2Ui();
             drawUiBoard(leftBoard);
             drawUiBoard(rightBoard);
-            drawRivalShips();
+            drawRivalShips(null);
             //TODO: drag and drop mins
             setDragAndDropMines();
 
@@ -231,9 +231,15 @@ public class Controller extends Application  {
         return max;
     }
 
-    private void drawRivalShips(){
+    private void drawRivalShips(Map<String, LinkedList<GameTool>> gameToolsReplay){
         rivalShipsGridPane.getChildren().clear();
-        Map<String, LinkedList<GameTool>> gameTools = battleShipGame.getGameTool(this.whoPlay);
+        Map<String, LinkedList<GameTool>> gameTools;
+        if (gameToolsReplay == null) {
+            gameTools = battleShipGame.getGameTool(this.whoPlay);
+        }
+        else{
+            gameTools = gameToolsReplay;
+        }
         //count how many cell need in the grid.
         int howManycellGrid = 0;
         int i =0;
@@ -415,7 +421,7 @@ public class Controller extends Application  {
         String result = battleShipGame.executeMove(column,row);
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
-        this.drawRivalShips();
+        this.drawRivalShips(null);
         if (result.contains("win")){
             //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
             System.out.print("we have winner!");
@@ -431,7 +437,21 @@ public class Controller extends Application  {
         // jonathan : update statistics by prevTurnReplay boject
     }
 
+    private void updateStatisticsReplay (Replay turn){
+        drawRivalShips(turn.rivalGetGameTool);
+        clearBindGameStatistic();
+        bindReplayStatistics(turn);
+    }
+
+    private void clearBindGameStatistic(){
+
+    }
+
+    private void bindReplayStatistics ( Replay turn){
+
+    }
     private void nextHandler(){
+
         Replay nextTurnReplay = this.battleShipGame.getNextReplayturn();
         if (nextTurnReplay == null){
             //we don't have anymore next turn
