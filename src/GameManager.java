@@ -290,14 +290,16 @@ public class GameManager {
         showStatusGame();
         //For Replay
         Replay currentReplay  = new Replay();
-        updateCurrentReplay(currentReplay);
+        updateCurrentReplay(currentReplay, row , column );
 
         this.replayTurns.add(this.replayIndex,currentReplay);
         replayIndex += 1;
         return res;
     }
 
-    private void updateCurrentReplay(Replay replay){
+    private void updateCurrentReplay(Replay replay, int row , int column){
+        replay.setRow( row);
+        replay.setColumn( column);
         replay.setAvargeTimeTurn(players[whoPlay].getAvargeTime());
         replay.setHits(players[whoPlay].getHits());
         replay.setMiss(players[whoPlay].getMissNum());

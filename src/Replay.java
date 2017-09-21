@@ -13,6 +13,28 @@ public class Replay {
     Map<String, LinkedList<GameTool>> rivalGetGameTool;
     private GameTool[][] board1;
     private GameTool[][] board2;
+    private int row;
+    private int column ;
+
+    public int getRow() {
+        return row;
+    }
+
+    public String getAvergeTimeTurn() {
+        return avergeTimeTurn;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
 
     public GameTool[][] getBoard1() {
         return board1;
