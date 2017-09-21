@@ -90,7 +90,8 @@ public class Controller extends Application  {
 
     @FXML
     public void exitGameHandler(){
-        // TODO: exit : close/hide and close everthing
+        this.battleShipGame = null;
+        // TODO: exit : exit UI
     }
 
     @Override
@@ -242,7 +243,7 @@ public class Controller extends Application  {
         for (Map.Entry<String, LinkedList<GameTool>> item : gameTools.entrySet()){
             LinkedList <GameTool> shipByType = item.getValue();
             k = i;
-            if (item.getKey().equals("L_SHAPE") ) {
+            if (shipByType.getFirst().getCategory().equals("L_SHAPE") ) {
 
                 //for size of ship. rival ship present by buttons
                 for (int j = 0; j < shipByType.getFirst().getSize(); j++) {
@@ -288,6 +289,7 @@ public class Controller extends Application  {
         }
 
     }
+
 
     private void drawUiBoard(GridPane board) {
         LinkedList<ColumnConstraints> columnConstraints = new LinkedList<>();
@@ -414,7 +416,28 @@ public class Controller extends Application  {
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
         this.drawRivalShips();
+        if (result.contains("win")){
+            //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
+            System.out.print("we have winner!");
+        }
+    }
 
+    private void prevHandler(){
+        Replay prevTurnReplay = this.battleShipGame.getPrevReplayTurn();
+        if (prevTurnReplay == null){
+            // we don't have anymore prev turn
+        }
+        // omer: update 2 board by prevTurnReplay boject
+        // jonathan : update statistics by prevTurnReplay boject
+    }
+
+    private void nextHandler(){
+        Replay nextTurnReplay = this.battleShipGame.getNextReplayturn();
+        if (nextTurnReplay == null){
+            //we don't have anymore next turn
+        }
+        //omer: update 2 board by nextTurnReplay obj
+        //jonathan: update statistics by nextTurnReplay obj
     }
 
     private void updateRivalDetails(String ship){

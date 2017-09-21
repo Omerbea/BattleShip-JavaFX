@@ -23,6 +23,10 @@ public class Player {
             return turns;
         }
 
+        public int getHits() {
+            return hits;
+        }
+
         public int getNumofMines() {
             return numofMines;
         }
@@ -196,6 +200,14 @@ public class Player {
             result.add("beenThere");
         }
         return result;
+    }
+
+    public int getHits(){
+        return this.playerStatistics.hits;
+    }
+
+    public int getNumOfTurns(){
+        return this.playerStatistics.turns;
     }
 
     public boolean iHaveMoreMine(){

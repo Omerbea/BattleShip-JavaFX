@@ -43,8 +43,8 @@ public class GameManager {
     private SimpleStringProperty propWhoPlay = new SimpleStringProperty("Player 1");
     private long finishTime = 0;
     private long startTime =0;
-
-
+    private  ArrayList <Replay> replayTurns  = new ArrayList<>();
+    private int replayIndex = 0;
     public SimpleStringProperty propWhoPlayProperty() {
         return propWhoPlay;
     }
@@ -288,8 +288,64 @@ public class GameManager {
         ArrayList <String> gameToolType = players[1- whoPlay].whoFindThere(coordinates.get(0), coordinates.get(1));
         String res= executeByTypeTool (gameToolType , coordinates , whoPlay, false);
         showStatusGame();
+        //For Replay
+        Replay currentReplay  = new Replay();
+        updateCurrentReplay(currentReplay);
 
+        this.replayTurns.add(this.replayIndex,currentReplay);
+        replayIndex += 1;
         return res;
+    }
+
+    private void updateCurrentReplay(Replay replay){
+        replay.setAvargeTimeTurn(players[whoPlay].getAvargeTime());
+        replay.setHits(players[whoPlay].getHits());
+        replay.setMiss(players[whoPlay].getMissNum());
+        replay.setNumOfTurns(players[whoPlay].getNumOfTurns());
+        replay.setRivalGetGameTool(players[whoPlay].getPlayerGameTools());
+        replay.setRivalMines(players[ 1- whoPlay].getNumOfMines());
+        replay.setScore(players[whoPlay].getScore());
+        if (whoPlay ==0) {
+            replay.setPlayerName("Player 1");
+        }
+        else if (whoPlay ==1){
+            replay.setPlayerName("Player 2");
+        }
+        else {
+            System.out.print("Error in updateCurrentReplay");
+        }
+        replay.setBoard1(players[0].myBoard);
+        replay.setBoard2(players[1].myBoard);
+    }
+
+    public Replay getPrevReplayTurn (){
+        //check if we have turn in the list
+
+        if (this.replayTurns.size() == 0){
+            return null;
+        }
+       //check if we are in the start
+        if (replayIndex == 0){
+            // we didnt have any prev turn. its mean that we in the first turn
+            return null;
+        }
+        this.replayIndex -=1;
+        return this.replayTurns.get(this.replayIndex);
+    }
+
+    public Replay getNextReplayturn (){
+        //check if er have turn in the list
+        if (replayTurns.size() == 0){
+            return  null;
+        }
+
+        // check if we didnt have next turn to show
+        if (replayTurns.size() == (this.replayIndex - 1)){
+            return  null;
+        }
+
+        this.replayIndex += 1;
+        return this.replayTurns.get(replayIndex);
     }
 
     private  boolean checkIfgGuessed(ArrayList<Integer> coordinates){
@@ -318,9 +374,9 @@ public class GameManager {
                     tmpScore = factory.getScoreByShipTypeId(gameToolType.get(1));
                     // update shipList
                     Map<String, LinkedList<GameTool>> gameTools = this.getGameTool(whoPlay);
-                    LinkedList<GameTool> gameTool = gameTools.get(gameToolType.get(2));
+                    LinkedList<GameTool> gameTool = gameTools.get(gameToolType.get(1));
                     if (gameTool.size() == 1){
-                        gameTools.remove(gameToolType.get(2));
+                        gameTools.remove(gameToolType.get(1));
                     }
                     else {
                         gameTool.removeFirst();
@@ -329,8 +385,9 @@ public class GameManager {
                 }
                 players[player].updateIHitMyTurn(coordinates.get(0), coordinates.get(1), gameToolType.get(0),tmpScore);
 
-                if (msg == "Game Over"){
+                if (msg.contains("Game Over")){
                     this.finishTheGame();
+                    return "Win";
                 }
                 backToMainMenu(msg);
                 return  gameToolType.get(2);
