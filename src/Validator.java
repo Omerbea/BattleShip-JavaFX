@@ -146,6 +146,36 @@ public class Validator {
                     Postion p = new Postion((gameTool.getRow() + i), gameTool.getColumn());
                     postionList.add(p);
                 }
+
+                else if (gameTool.getShipDirection().equals("RIGHT_DOWN")) {
+                    Postion p = new Postion((gameTool.getRow()), gameTool.getColumn() - i);
+                    Postion p1 = new Postion((gameTool.getRow() + i), gameTool.getColumn());
+                    postionList.add(p);
+                    postionList.add(p1);
+                }
+
+                else if (gameTool.getShipDirection().equals("RIGHT_UP")) {
+                    Postion p = new Postion((gameTool.getRow()), gameTool.getColumn() - i);
+                    Postion p1 = new Postion((gameTool.getRow() - i), gameTool.getColumn());
+                    postionList.add(p);
+                    postionList.add(p1);
+                }
+
+                else if (gameTool.getShipDirection().equals("UP_RIGHT")) {
+                    Postion p = new Postion((gameTool.getRow()), gameTool.getColumn() + i);
+                    Postion p1 = new Postion((gameTool.getRow() + i), gameTool.getColumn());
+                    postionList.add(p);
+                    postionList.add(p1);
+                }
+
+                else if (gameTool.getShipDirection().equals("DOWN_RIGHT")) {
+                    Postion p = new Postion((gameTool.getRow()), gameTool.getColumn() + i);
+                    Postion p1 = new Postion((gameTool.getRow() - i), gameTool.getColumn());
+                    postionList.add(p);
+                    postionList.add(p1);
+                }
+
+
             }
         }
 

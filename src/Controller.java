@@ -60,6 +60,8 @@ public class Controller extends Application  {
     @FXML Label rivalNumOfmissLabel ;
     @FXML Label rivalAverageTimeTurnLabel ;
     @FXML Label rivalNumOfTurnsLabel ;
+    @FXML Button playButton;
+    @FXML Button prevButton;
     @FXML GridPane rightBoard;
     @FXML GridPane leftBoard;
     @FXML GridPane rivalShipsGridPane;
@@ -100,10 +102,12 @@ public class Controller extends Application  {
         primaryStage = i_primaryStage;
         Pane root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
 
+
         primaryStage.setTitle("Battleship Game");
         scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
     //TODO: back the comment below to be active. I comment this only for tests
     //private void printBaordsAndMenu(String name, char[][] boardOne, char[][] boardTwo, int score, List<String> menu){
@@ -161,6 +165,7 @@ public class Controller extends Application  {
             drawRivalShips(null);
             //TODO: drag and drop mins
             setDragAndDropMines();
+            mineImage.setVisible(true);
 
         }
         else{
@@ -212,6 +217,7 @@ public class Controller extends Application  {
                 ((extendedButton)node).setText(" ");
             }
         }*/
+
         for (Node node : Board.getChildren()) {
                 ((extendedButton)node).setText(Character.toString(LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]));
         }
@@ -352,9 +358,7 @@ public class Controller extends Application  {
             @Override
             public void handle(DragEvent event) {
                 // change back to original color
-                ColorAdjust color = new ColorAdjust();
-                color.setBrightness(0);
-                btn.setEffect(color);
+                btn.setStyle("");
                 event.consume();
             }
 
@@ -364,9 +368,14 @@ public class Controller extends Application  {
             @Override
             public void handle(DragEvent event) {
                 if(event.getGestureSource() != btn /*TODO : for another drag*/) {
-                    ColorAdjust color = new ColorAdjust();
-                    color.setBrightness(-0.5);
-                    btn.setEffect(color);
+                    btn.setStyle("    -fx-background-color:\n" +
+                            "        linear-gradient(#f0ff35, #a9ff00),\n" +
+                            "        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);\n" +
+                            "    -fx-background-radius: 6, 5;\n" +
+                            "    -fx-background-insets: 0, 1;\n" +
+                            "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
+                            "    -fx-text-fill: #395306;");
+
                 }
                 event.consume();
             }
@@ -424,6 +433,10 @@ public class Controller extends Application  {
         this.drawRivalShips(null);
         if (result.contains("win")){
             //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
+
+            playButton.setVisible(true);
+            prevButton.setVisible(true);
+
             System.out.print("we have winner!");
         }
     }
@@ -434,9 +447,31 @@ public class Controller extends Application  {
             // we don't have anymore prev turn
         }
         // omer: update 2 board by prevTurnReplay boject
+        fillBoardWithData(leftBoard,GameToolBoardToCharBaord(prevTurnReplay.getBoard1()));
+        fillBoardWithData(rightBoard , prevTurnReplay.getBoard2());
         // jonathan : update statistics by prevTurnReplay boject
     }
 
+    private char[][] GameToolBoardToCharBaord(GameTool[][] board) {
+        int size = battleShipGame.getBoardSize();
+        char [][] boardForPrint = new char[size][size];
+        for (int row =0 ; row< size ; row++){
+            for (int column =0 ; column < size ; column++){
+                if (board[row][column] != null) {
+                    if (board[row][column].isHitMyThere(new Position(row, column))) {
+                        boardForPrint[row][column] = 'X';
+                    } else {
+                        boardForPrint[row][column] = board[row][column].getMySing();
+                    }
+                }
+                else{
+                    boardForPrint[row][column] = ' ';
+                }
+            }
+        }
+        return  boardForPrint;
+
+    }
     private void updateStatisticsReplay (Replay turn){
         drawRivalShips(turn.rivalGetGameTool);
         clearBindGameStatistic();
@@ -457,6 +492,8 @@ public class Controller extends Application  {
             //we don't have anymore next turn
         }
         //omer: update 2 board by nextTurnReplay obj
+        fillBoardWithData(leftBoard,GameToolBoardToCharBaord(nextTurnReplay.getBoard1()));
+        fillBoardWithData(rightBoard , nextTurnReplay.getBoard2());
         //jonathan: update statistics by nextTurnReplay obj
     }
 
