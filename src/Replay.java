@@ -2,6 +2,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringPropertyBase;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -64,7 +65,11 @@ public class Replay {
     }
 
     public void setRivalBoard(char[][] board) {
-        this.rivalBoard = board;
+        char [][] newBoard = new char[board.length][];
+        for (int i =0 ; i < board.length; i++){
+            newBoard[i] = Arrays.copyOf(board[i], board[i].length);
+        }
+        this.rivalBoard = newBoard;
     }
 
     public void setAvargeTimeTurn(String avargeTimeTurn) {

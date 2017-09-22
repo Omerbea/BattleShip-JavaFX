@@ -546,7 +546,10 @@ public class Controller extends Application  {
         //omer: update 2 board by nextTurnReplay obj
         fillBoardWithData(leftBoard,nextTurnReplay.getRivalBoard());
         fillBoardWithData(rightBoard , nextTurnReplay.getPlayerBoard());
+        updateStatisticsReplay(nextTurnReplay);
         //jonathan: update statistics by nextTurnReplay obj
+
+
     }
 
     private void updateRivalDetails(String ship){
