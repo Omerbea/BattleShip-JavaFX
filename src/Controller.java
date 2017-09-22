@@ -196,7 +196,6 @@ public class Controller extends Application  {
                 if(event.getTransferMode() == TransferMode.MOVE) {
                     System.out.println("ok");
                 } else {
-                    mineImage
                     System.out.println("fail");
                 }
                 event.consume();
