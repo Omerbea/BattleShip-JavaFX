@@ -431,24 +431,25 @@ public class Controller extends Application  {
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
         this.drawRivalShips(null);
-        if (result.contains("win")){
+        if (result.contains("Win")){
             //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
 
             playButton.setVisible(true);
             prevButton.setVisible(true);
 
-            System.out.print("we have winner!");
+            System.out.print("we have a winner!");
         }
     }
-
-    private void prevHandler(){
+    @FXML
+    public void prevHandler(){
         Replay prevTurnReplay = this.battleShipGame.getPrevReplayTurn();
         if (prevTurnReplay == null){
             // we don't have anymore prev turn
         }
         // omer: update 2 board by prevTurnReplay boject
-        fillBoardWithData(leftBoard,GameToolBoardToCharBaord(prevTurnReplay.getBoard1()));
-        fillBoardWithData(rightBoard , prevTurnReplay.getBoard2());
+        fillBoardWithData(leftBoard,prevTurnReplay.getRivalBoard());
+        fillBoardWithData(rightBoard , prevTurnReplay.getPlayerBoard());
+        updateStatisticsReplay(prevTurnReplay);
         // jonathan : update statistics by prevTurnReplay boject
     }
 
@@ -474,16 +475,50 @@ public class Controller extends Application  {
     }
     private void updateStatisticsReplay (Replay turn){
         drawRivalShips(turn.rivalGetGameTool);
-        clearBindGameStatistic();
+        unBindGameStatistic();
         bindReplayStatistics(turn);
     }
 
-    private void clearBindGameStatistic(){
-
+    private void unBindGameStatistic(){
+            //Player Name
+            currentPlayerNameLabel.textProperty().unbind();
+            // score
+            scorePlayerLabel.textProperty().unbind();
+            //Hit
+            numOfHitsLabel.textProperty().unbind();
+            //Miss
+            numOfmissLabel.textProperty().unbind();
+            //Average Turn Time
+            averageTimeTurnLabel.textProperty().unbind();
+            //Number Of Turns
+            numOfTurnsLabel.textProperty().unbind();
+            rivalNumMines.textProperty().unbind();
     }
 
     private void bindReplayStatistics ( Replay turn){
 
+        //Current Player
+
+        //Player Name
+        currentPlayerNameLabel.setText((turn.getPlayerName()));
+        // score
+        scorePlayerLabel.setText(("Score: " + String.valueOf(turn.getScore())));
+        //Hit
+        numOfHitsLabel.setText( "Hits: "+ String.valueOf(turn.getHits()));
+        //Miss
+        numOfmissLabel.setText("Miss: "+ String.valueOf(turn.getMiss()));
+        //Average Turn Time
+        averageTimeTurnLabel.setText("Average Time for Turn: " + (turn.getAvargeTimeTurn()));
+        //Number Of Turns
+        numOfTurnsLabel.setText( "Number of Turns: " + String.valueOf(turn.getNumOfTurns()));
+
+        //Raivel Player
+
+        //Title rival
+        rivalPlayerDetailsLabel.setText("Rival Details");
+        //num Mines
+        //TODO: add mines to the bind
+        rivalNumMines.setText("Mines: " + String.valueOf(turn.getRivalMines()));
     }
     private void nextHandler(){
 
@@ -492,8 +527,8 @@ public class Controller extends Application  {
             //we don't have anymore next turn
         }
         //omer: update 2 board by nextTurnReplay obj
-        fillBoardWithData(leftBoard,GameToolBoardToCharBaord(nextTurnReplay.getBoard1()));
-        fillBoardWithData(rightBoard , nextTurnReplay.getBoard2());
+        fillBoardWithData(leftBoard,nextTurnReplay.getRivalBoard());
+        fillBoardWithData(rightBoard , nextTurnReplay.getPlayerBoard());
         //jonathan: update statistics by nextTurnReplay obj
     }
 

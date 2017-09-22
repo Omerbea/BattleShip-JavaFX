@@ -1,18 +1,29 @@
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringPropertyBase;
+
 import java.util.LinkedList;
 import java.util.Map;
 
 public class Replay {
 
     private String playerName;
+    private SimpleStringProperty propPlayerName= new SimpleStringProperty();
     private int score;
+    private SimpleStringProperty propScore =  new SimpleStringProperty();
     private int Hits;
+    private SimpleStringProperty propHits = new SimpleStringProperty();
     private int Miss;
+    private SimpleStringProperty propMiss = new SimpleStringProperty();
     private String avergeTimeTurn;
+    private SimpleStringProperty propAvergeTimeTurn = new SimpleStringProperty();
     private int numOfTurns;
+    private SimpleStringProperty propNumOfTurns = new SimpleStringProperty();
     private int rivalMines;
+    private SimpleStringProperty propRivalMines = new SimpleStringProperty();
     Map<String, LinkedList<GameTool>> rivalGetGameTool;
-    private GameTool[][] board1;
-    private char[][] board2;
+    private char[][] playerBoard;
+    private char[][] rivalBoard;
     private int row;
     private int column ;
 
@@ -20,9 +31,7 @@ public class Replay {
         return row;
     }
 
-    public String getAvergeTimeTurn() {
-        return avergeTimeTurn;
-    }
+
 
     public int getColumn() {
         return column;
@@ -36,45 +45,51 @@ public class Replay {
         this.row = row;
     }
 
-    public GameTool[][] getBoard1() {
-        return board1;
+    public char[][] getPlayerBoard() {
+        return this.playerBoard;
     }
 
 
-    public void setBoard1(GameTool[][] board1) {
-        this.board1 = board1;
+    public void setPlayerBoard(char[][] board) {
+        this.playerBoard = board;
     }
 
     public void setAvergeTimeTurn(String avergeTimeTurn) {
         this.avergeTimeTurn = avergeTimeTurn;
+        this.propAvergeTimeTurn.set(avergeTimeTurn);
     }
 
-    public char[][] getBoard2() {
-        return board2;
+    public char[][] getRivalBoard() {
+        return rivalBoard;
     }
 
-    public void setBoard2(char[][] board2) {
-        this.board2 = board2;
+    public void setRivalBoard(char[][] board) {
+        this.rivalBoard = board;
     }
 
     public void setAvargeTimeTurn(String avargeTimeTurn) {
         this.avergeTimeTurn = avargeTimeTurn;
+        this.propAvergeTimeTurn.set(avargeTimeTurn);
     }
 
     public void setHits(int hits) {
         Hits = hits;
+        this.propHits.set(String.valueOf(hits));
     }
 
     public void setMiss(int miss) {
         Miss = miss;
+        this.propHits.set(String.valueOf(miss));
     }
 
     public void setNumOfTurns(int numOfTurns) {
         this.numOfTurns = numOfTurns;
+        this.propNumOfTurns.set(String.valueOf(numOfTurns));
     }
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+        propPlayerName.set(playerName);
     }
 
     public void setRivalGetGameTool(Map<String, LinkedList<GameTool>> rivalGetGameTool) {
@@ -83,10 +98,12 @@ public class Replay {
 
     public void setRivalMines(int rivalMines) {
         this.rivalMines = rivalMines;
+        this.propRivalMines.set(String.valueOf(rivalMines));
     }
 
     public void setScore(int score) {
         this.score = score;
+        this.propScore.set(String.valueOf(score));
     }
 
     public int getRivalMines() {
@@ -118,7 +135,7 @@ public class Replay {
     }
 
     public int getScore() {
-        return score;
+        return this.score;
     }
 
 }
