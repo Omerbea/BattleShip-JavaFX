@@ -113,8 +113,8 @@
                   <VBox fx:id="middleBoard"  GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" spacing="10">
                      <FlowPane alignment="CENTER">
 
-                        <Button fx:id="prevButton" visible="false">Play</Button>
-                        <Button fx:id="playButton" visible="false">Prev</Button>
+                        <Button fx:id="prevButton" onMouseClicked="#prevHandler" visible="false">Prev</Button>
+                        <Button fx:id="playButton" visible="false">Next</Button>
 
                      </FlowPane>
                   </VBox>
