@@ -14,10 +14,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -199,6 +196,7 @@ public class Controller extends Application  {
                 if(event.getTransferMode() == TransferMode.MOVE) {
                     System.out.println("ok");
                 } else {
+                    mineImage
                     System.out.println("fail");
                 }
                 event.consume();
@@ -219,7 +217,23 @@ public class Controller extends Application  {
         }*/
 
         for (Node node : Board.getChildren()) {
-                ((extendedButton)node).setText(Character.toString(LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]));
+                if((LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]) == '-') {
+                    ((extendedButton)node).setDisable(true);
+                    ((extendedButton)node).setStyle("    -fx-background-color:\n" +
+                            "        linear-gradient(#f04f35, #f04f35),\n" +
+                            "        radial-gradient(center 50% -40%, radius 200%, #b84e36 45%, #b84e36 50%);\n" +
+                            "    -fx-background-radius: 6, 5;\n" +
+                            "    -fx-background-insets: 0, 1;\n" +
+                            "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
+                            "    -fx-text-fill: #391306;");
+
+
+
+                } else {
+                    ((extendedButton) node).setText(Character.toString(LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]));
+                    ((extendedButton) node).setStyle("");
+                    ((extendedButton)node).setDisable(false);
+                }
         }
 
 
@@ -543,28 +557,48 @@ public class Controller extends Application  {
 
     }
     @FXML
-    public void loadFileHandler() {
+    public void loadFileHandler() throws InterruptedException {
      /*   try {
 
             battleShipGame.isFileValid("C:\\BattleShip\\Battleship\\resources\\battleShip_5_basic.xml");
         } catch (Exception e) {
 
         }*/
-        //TODO: new Thread . maybe we need to pass a task for the new thread and until his task finished we show progress bar
-
         gameLoadedLabel = new Label();
 
         final FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(primaryStage);
         //TODO: check that file is not null. when the user close the fileChooser without hes selected a file
-        try {
-            battleShipGame.isFileValid(file.getAbsolutePath());
-            //TODO: handle with successes
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR , e.getMessage());
+        if(file != null) {
+            Runnable task = () -> {
+                System.out.println("Hello new thread");
+                //TODO : set progress bar here
+                /*ProgressBar p2 = new ProgressBar();
+                p2.setProgress(0.25F);*/
+
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    battleShipGame.isFileValid(file.getAbsolutePath());
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                    alert.showAndWait();
+                    System.out.println(e.getMessage());
+                }
+
+            };
+            Thread thread = new Thread(task);
+            thread.start();
+            thread.join();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose file");
             alert.showAndWait();
-           System.out.println(e.getMessage());
         }
+                //TODO: handle with successes
 
     }
 
