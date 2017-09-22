@@ -430,6 +430,7 @@ public class Controller extends Application  {
         String result = battleShipGame.executeMove(column,row);
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
+        bindStatistics2Ui();
         this.drawRivalShips(null);
         if (result.contains("Win")){
             //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
@@ -438,6 +439,9 @@ public class Controller extends Application  {
             prevButton.setVisible(true);
 
             System.out.print("we have a winner!");
+        }
+        else if (result.contains("non")){
+            bindStatistics2Ui();
         }
     }
     @FXML
