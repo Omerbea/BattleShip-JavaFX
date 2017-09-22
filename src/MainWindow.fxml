@@ -114,7 +114,7 @@
                      <FlowPane alignment="CENTER">
 
                         <Button fx:id="prevButton" onMouseClicked="#prevHandler" visible="false">Prev</Button>
-                        <Button fx:id="playButton" visible="false">Next</Button>
+                        <Button fx:id="playButton" onMouseClicked="#nextHandler" visible="false">Next</Button>
 
                      </FlowPane>
                   </VBox>

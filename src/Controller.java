@@ -537,6 +537,7 @@ public class Controller extends Application  {
         //TODO: add mines to the bind
         rivalNumMines.setText("Mines: " + String.valueOf(turn.getRivalMines()));
     }
+    @FXML
     private void nextHandler(){
 
         Replay nextTurnReplay = this.battleShipGame.getNextReplayturn();
