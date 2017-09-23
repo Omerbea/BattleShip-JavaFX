@@ -32,7 +32,7 @@
       </HBox>
    </bottom>
    <left>
-      <VBox prefHeight="200.0" prefWidth="170.0" BorderPane.alignment="CENTER_RIGHT" maxWidth="Infinity" maxHeight="Infinity" spacing="2">
+      <VBox fx:id="rivalStatistics" prefHeight="200.0" prefWidth="170.0" BorderPane.alignment="CENTER_RIGHT" maxWidth="Infinity" maxHeight="Infinity" spacing="2">
          <children>
             <Label fx:id="rivalPlayerDetailsLabel" alignment="CENTER" prefHeight="15.0" prefWidth="250" text="" textAlignment="CENTER">
             <font>
@@ -53,7 +53,7 @@
 
    </left>
    <right>
-      <VBox prefHeight="200.0" prefWidth="170.0" maxWidth="Infinity" maxHeight="Infinity" BorderPane.alignment="CENTER_LEFT">
+      <VBox fx:id="rightStatistics" prefHeight="200.0" prefWidth="170.0" maxWidth="Infinity" maxHeight="Infinity" BorderPane.alignment="CENTER_LEFT">
          <children>
             <Label fx:id="currentPlayerNameLabel" alignment="CENTER" prefHeight="56.0" prefWidth="192.0" text="" textAlignment="CENTER">
                     <font>
@@ -116,6 +116,9 @@
                         <Button fx:id="prevButton" onMouseClicked="#prevHandler" visible="false">Prev</Button>
                         <Button fx:id="playButton" onMouseClicked="#nextHandler" visible="false">Next</Button>
 
+                     </FlowPane>
+                     <FlowPane alignment="CENTER">
+                        <Label fx:id="errorLabel" alignment="CENTER" prefHeight="15.0" prefWidth="250" text="" textAlignment="CENTER"/>
                      </FlowPane>
                   </VBox>
                    <GridPane fx:id="leftBoard" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">

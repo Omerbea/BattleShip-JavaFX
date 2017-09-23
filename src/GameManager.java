@@ -77,6 +77,9 @@ public class GameManager {
         return players[player].propNumOfTurnsCurrentPlayer();
     }
 
+    public boolean getIsGameLoaded (){
+        return this.isGameLoaded;
+    }
     public int getNumOfMinesFromPlayer (int player){
         return this.players[player].getNumOfMines();
     }
@@ -95,7 +98,7 @@ public class GameManager {
         this.mainMenu.add("add mine"); //7
         this.mainMenu.add("quit game"); //8
     }
-
+/*
     private void start() {
         this.userInterface.printMenu(mainMenu,"middle");
         int input = -1;
@@ -116,7 +119,7 @@ public class GameManager {
                     }
                     userInterface.printMassage("Please Enter full path for xml file :");
                     String xmlpath = new Scanner(System.in).nextLine();
-                    if (true/*this.loadGame(xmlpath)*/) {
+                    if (true this.loadGame(xmlpath) {
                         backToMainMenu("your file is loaded...");
 
                     }
@@ -151,7 +154,7 @@ public class GameManager {
         }
     }
 
-
+*/
 
     public Boolean isFileValid(String fileName ) throws Exception {
             Boolean fileValid = false;
@@ -172,7 +175,7 @@ public class GameManager {
         this.whoPlay=0;
         this.propWhoPlay.set ("Player 1");
         this.players = null;
-        this.gameStatistic = null;
+        //this.gameStatistic = null;
         this.isGameRun =false;
         this.isGameLoaded= false;
         userInterface.printMassage(("restart successfully!"));
@@ -211,8 +214,16 @@ public class GameManager {
                     if (players[whoPlay].setMine(row, column)) {
                         //backToMainMenu("set mine! ");
                         //break;
+                        Replay replay = new Replay();
+                        replay.setRow(row);
+                        replay.setColumn(column);
+                        replay.setIsMine(true);
+                        this.replayTurns.add(replay);
+                        return true;
                     }
-                userInterface.printMassage(" canot set Mine in these place. please insert new coordinates... ");
+                    else{
+                        return  false;
+                    }
 
         }
         return true;
@@ -443,15 +454,13 @@ public class GameManager {
 
 
 
-    public  boolean gameStart(){
+    public  boolean gameStart() throws Exception {
         if (! this.isGameLoaded){
             //ERROR: the game not loaded.
-            backToMainMenu("game not loaded...");
-            return false;
+            throw new Exception("game not loaded, please load game ");
         }
         if (this.isGameRun){
-            backToMainMenu("game already run.");
-            return false;
+            throw new Exception("game already run");
         }
 
         this.isGameRun = true;

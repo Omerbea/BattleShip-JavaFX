@@ -28,6 +28,15 @@ public class Replay {
     private int row;
     private int column ;
 
+    private boolean isMine = false;
+
+    public void setIsMine (boolean flag){
+      isMine = flag;
+    }
+
+    public boolean getIsMine (){
+        return this.isMine;
+    }
     public int getRow() {
         return row;
     }

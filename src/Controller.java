@@ -43,13 +43,16 @@ public class Controller extends Application  {
 
     Stage primaryStage = new Stage();
     Scene scene;
+    @FXML Label errorLabel;
+    @FXML VBox rivalStatistics;
+    @FXML VBox rightStatistics;
     @FXML Pane mainPane;
     @FXML Button exitGameBtn;
     @FXML Button restartGameBtn;
     @FXML public Button closeButton;
     @FXML public Button loadFileBtn;
     @FXML public Button startGameBtn;
-    @FXML Button startGame;
+    //@FXML Button startGame;
     @FXML Label currentPlayerNameLabel;
     @FXML Label scorePlayerLabel ;
     @FXML Label numOfHitsLabel ;
@@ -87,7 +90,30 @@ public class Controller extends Application  {
 
     @FXML
     public void restartGameHandler(){
+        errorLabel.setVisible(true);
+        errorLabel.textProperty().setValue("restarting.");
+    //    errorLabel.setText("restarting.");
+    //    errorLabel.setText("restarting..");
+  //      errorLabel.setText("restarting...");
+//        errorLabel.setText("restarting....");
+
+
         battleShipGame.restartGame();
+        rightBoard.setVisible(false);
+        leftBoard.setVisible(false);
+        //rightBoard.getChildren().clear();
+        //leftBoard.getChildren().clear();
+        rightStatistics.setVisible(false);
+        rivalStatistics.setVisible(false);
+        //rivalShipsGridPane.getChildren().clear();
+       /* try {
+            startGameHandler();
+        }
+        catch (Exception e){
+
+        }*/
+        errorLabel.setText("");
+        errorLabel.setVisible(false);
         //TODO: restart UI
 
     }
@@ -95,6 +121,7 @@ public class Controller extends Application  {
     @FXML
     public void exitGameHandler(){
         this.battleShipGame = null;
+        Platform.exit();
         // TODO: exit : exit UI
     }
 
@@ -110,6 +137,7 @@ public class Controller extends Application  {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+
     }
     //TODO: back the comment below to be active. I comment this only for tests
     //private void printBaordsAndMenu(String name, char[][] boardOne, char[][] boardTwo, int score, List<String> menu){
@@ -121,8 +149,11 @@ public class Controller extends Application  {
         if (battleShipGame.propWhoPlayProperty().getValue() == "Player 2"){
             whoPlay = 1;
         }
-        else{
+        else if (battleShipGame.propWhoPlayProperty().getValue() == "Player 1"){
             whoPlay =0;
+        }
+        else{
+            System.out.print("Error");
         }
     //Current Player
         // score
@@ -154,28 +185,31 @@ public class Controller extends Application  {
         rivalNumOfTurnsLabel.textProperty().bind(Bindings.selectString(battleShipGame.propNumOfTurnsCurrentPlayer(1-whoPlayer)));
         */
 
-
+        rightStatistics.setVisible(true);
 
     }
 
     @FXML
     public void startGameHandler() throws IOException {
-        if (battleShipGame.gameStart()){
-            bindStatistics2Ui();
-            drawUiBoard(leftBoard);
-            drawUiBoard(rightBoard);
-            drawRivalShips(null);
-            //TODO: drag and drop mins
-            setDragAndDropMines();
-            mineImage.setVisible(true);
+        try {
+            if (battleShipGame.gameStart()) {
+                bindStatistics2Ui();
+                drawUiBoard(leftBoard);
+                drawUiBoard(rightBoard);
+                drawRivalShips(null);
+                //TODO: drag and drop mins
+                setDragAndDropMines();
+                mineImage.setVisible(true);
 
+            }
         }
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR , "error");
+        catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.WARNING ,   e.getMessage());
+            alert.setTitle("BattleShip Game");
+            alert.setHeaderText("Can not perform this task");
             alert.showAndWait();
-            System.out.println("error");
+            System.out.println(e.getMessage());
         }
-
 
     }
 
@@ -317,7 +351,7 @@ public class Controller extends Application  {
             i+=1;
             // for space between two type of ships
         }
-
+        rivalStatistics.setVisible(true);
     }
 
 
@@ -368,7 +402,7 @@ public class Controller extends Application  {
             }
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
-
+        board.setVisible(true);
         }
 
     private void setDragAndDropTargetMine(extendedButton btn) {
@@ -468,11 +502,16 @@ public class Controller extends Application  {
         if (prevTurnReplay == null){
             // we don't have anymore prev turn
         }
-        // omer: update 2 board by prevTurnReplay boject
-        fillBoardWithData(leftBoard,prevTurnReplay.getRivalBoard());
-        fillBoardWithData(rightBoard , prevTurnReplay.getPlayerBoard());
-        updateStatisticsReplay(prevTurnReplay);
-        // jonathan : update statistics by prevTurnReplay boject
+        if (prevTurnReplay.getIsMine() == false) {
+            // omer: update 2 board by prevTurnReplay boject
+            fillBoardWithData(leftBoard, prevTurnReplay.getRivalBoard());
+            fillBoardWithData(rightBoard, prevTurnReplay.getPlayerBoard());
+            updateStatisticsReplay(prevTurnReplay);
+            // jonathan : update statistics by prevTurnReplay boject
+        }
+        else{
+            //TODO: updateReplay set mine
+        }
     }
 
     private char[][] GameToolBoardToCharBaord(GameTool[][] board) {
@@ -576,14 +615,22 @@ public class Controller extends Application  {
         } catch (Exception e) {
 
         }*/
-        gameLoadedLabel = new Label();
+        if (this.battleShipGame.getIsGameLoaded() == false) {
+            gameLoadedLabel = new Label();
 
-        final FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(primaryStage);
+            final FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(primaryStage);
 
 
-        if(file != null) {
-            LoadFile(file);
+            if (file != null) {
+                LoadFile(file);
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING ,  "game already run...you have to restart game for load a new game ");
+            alert.setTitle("BattleShip Game");
+            alert.setHeaderText("Can not perform this task");
+            alert.showAndWait();
         }
 
     }
