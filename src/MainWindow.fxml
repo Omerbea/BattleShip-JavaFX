@@ -87,7 +87,6 @@
             </Label>
             <GridPane alignment="CENTER">
                  <ImageView visible="false" fx:id="mineImage" fitHeight="50" fitWidth="50" onMouseDragged="#dragHandler" >
-                     <Image url="Mine.png" ></Image>
                  </ImageView>
             </GridPane>
          </children>

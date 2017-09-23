@@ -140,6 +140,7 @@ public class Player {
 
     public int getNumOfMines (){
         return this.playerStatistics.getNumofMines()- this.counterMine;
+
     }
 
     public void setNumOfMines(int num){
