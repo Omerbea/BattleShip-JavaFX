@@ -77,6 +77,10 @@ public class GameManager {
         return players[player].propNumOfTurnsCurrentPlayer();
     }
 
+    public  int getNumOfMinesCurrentPlayer (){
+        return this.players[whoPlay].getNumOfMines();
+    }
+
     public boolean getIsGameLoaded (){
         return this.isGameLoaded;
     }
