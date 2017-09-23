@@ -169,6 +169,7 @@ public class Controller extends Application  {
             setDragAndDropMines();
             mineImage.setVisible(true);
 
+
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR , "error");
@@ -383,17 +384,21 @@ public class Controller extends Application  {
         });
 
         btn.setOnDragEntered(new EventHandler<DragEvent>() {
+
             @Override
             public void handle(DragEvent event) {
-                if(event.getGestureSource() != btn /*TODO : for another drag*/) {
-                    btn.setStyle("    -fx-background-color:\n" +
-                            "        linear-gradient(#f0ff35, #a9ff00),\n" +
-                            "        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);\n" +
-                            "    -fx-background-radius: 6, 5;\n" +
-                            "    -fx-background-insets: 0, 1;\n" +
-                            "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
-                            "    -fx-text-fill: #395306;");
 
+                if(event.getGestureSource() != btn /*TODO : for another drag*/) {
+                    if (!badPostion(btn.getRow(), btn.getColumn())) {
+                        btn.setStyle("    -fx-background-color:\n" +
+                                "        linear-gradient(#f0ff35, #a9ff00),\n" +
+                                "        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);\n" +
+                                "    -fx-background-radius: 6, 5;\n" +
+                                "    -fx-background-insets: 0, 1;\n" +
+                                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
+                                "    -fx-text-fill: #395306;");
+
+                    }
                 }
                 event.consume();
             }
@@ -443,6 +448,13 @@ public class Controller extends Application  {
 
     }
 
+    private boolean badPostion(int row, int column) {
+        if(battleShipGame.getMineList().stream().filter(pos -> pos.getRow() == row && pos.getColumn() == column ).count() > 0){
+            return true;
+        }
+        return false ;
+    }
+
 
     private void executeMoveHandler(int row, int column) {
         String result = battleShipGame.executeMove(column,row);
@@ -471,8 +483,23 @@ public class Controller extends Application  {
         // omer: update 2 board by prevTurnReplay boject
         fillBoardWithData(leftBoard,prevTurnReplay.getRivalBoard());
         fillBoardWithData(rightBoard , prevTurnReplay.getPlayerBoard());
+        paintMoveHigalight(prevTurnReplay.getRow(), prevTurnReplay.getColumn());
         updateStatisticsReplay(prevTurnReplay);
         // jonathan : update statistics by prevTurnReplay boject
+    }
+
+    private void paintMoveHigalight(int row, int column) {
+        for(Node node : leftBoard.getChildren()) {
+            if(((extendedButton)node).getRow() == row && ((extendedButton)node).getColumn() == column) {
+                ((extendedButton)node).setStyle("    -fx-background-color:\n" +
+                        "        linear-gradient(#72d, #72d),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #72d 45%, #72d 50%);\n" +
+                        "    -fx-background-radius: 6, 5;\n" +
+                        "    -fx-background-insets: 0, 1;\n" +
+                        "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
+                        "    -fx-text-fill: #72d;");
+            }
+        }
     }
 
     private char[][] GameToolBoardToCharBaord(GameTool[][] board) {

@@ -514,7 +514,19 @@ public class GameManager {
         return players[whoPlay].getRivalBoard();
     }
 
+    public LinkedList<Position> getMineList() {
+/*         LinkedList<Position> list = new LinkedList<>();
 
+         for(int i = 0 ; i < getBoardSize() ; i++) {
+             for(int j = 0 ; j < getBoardSize() ; j++) {
+                if(!players[whoPlay].setMine(i , j)) {
+                    list.add(new Position(i, j));
+                }
+             }
+         }
+         return list;*/
+        return factory.getMineList(players[whoPlay].myBoard);
+    }
 
 }
 

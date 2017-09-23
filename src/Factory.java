@@ -1,6 +1,7 @@
 import GameParser.BattleShipGame;
 import GameParser.BattleShipGame.Boards.Board.Ship;
 import GameParser.BattleShipGame.ShipTypes.ShipType;
+import sun.awt.image.ImageWatched;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -88,7 +89,7 @@ public class Factory {
         }
 
 
-
+        //getMineList(board);
         return board;
     }
 
@@ -262,21 +263,6 @@ public class Factory {
         return score;
     }
 
-    private void printb(GameTool[][] board) {
-        for(int i = 0 ; i < GameData.getBoardSize() ; i++) {
-            for (int j = 0 ; j < GameData.getBoardSize(); j++) {
-                if(board[i][j] == null) {
-                System.out.printf("0");
-                } else {
-                    System.out.printf("*");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println();
-        System.out.println();
-    }
 
     private int getShipSizeByType(String id) {
         List<ShipType> types = GameData.getShipTypes().getShipType();
@@ -288,5 +274,9 @@ public class Factory {
         }
         return length;
 
+    }
+
+    public LinkedList<Position> getMineList(GameTool[][] board) {
+        return getGameDataValidator().getListOfBadCorrdinatesForMine(board);
     }
 }
