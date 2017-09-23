@@ -3,6 +3,7 @@ import GameParser.BattleShipGame.Boards.Board;
 import GameParser.BattleShipGame.Boards.Board.Ship;
 import GameParser.BattleShipGame.ShipTypes;
 import GameParser.BattleShipGame.ShipTypes.ShipType;
+import sun.awt.image.ImageWatched;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public class Validator {
 
 
-    class Postion {
+    public class Postion {
         private int row ;
         private int column;
 
@@ -38,6 +39,7 @@ public class Validator {
                 size > 20) {
             throw new Exception("Board size MUST be <= 20 or >= 5");
         }
+
     }
 
     public void ValidateShipTypes(List<ShipType> shipType, List<Board> gameBoards) throws Exception {
@@ -94,7 +96,48 @@ public class Validator {
         return true;
     }
 
-    private boolean isGameToolArroundCoordinate(int i_row, int i_column, GameTool[][] board, LinkedList<Postion> listOfGameToolCoordinates) {
+   public LinkedList<Position> getListOfBadCorrdinatesForMine(GameTool[][] board) {
+        LinkedList<Position> listOfCorrdinates = new LinkedList<>();
+        LinkedList<Postion> fakeList = new LinkedList<>();
+
+        for(int i = 0 ; i < boardsize ; i++) {
+            for(int j = 0 ; j  < boardsize ; j++) {
+                Postion p  = new Postion(i , j);
+                fakeList.add(p);
+                if(isGameToolArroundMineCoordinate(i , j , board , fakeList)) {
+                    listOfCorrdinates.add(new Position(p.getRow() , p.getColumn()));
+                }
+                fakeList.remove(p);
+            }
+        }
+        return listOfCorrdinates;
+    }
+
+    private boolean isGameToolArroundMineCoordinate(int i_row, int i_column, GameTool[][] board, LinkedList<Postion> listOfGameToolCoordinates ) {
+        int runner = 0;
+
+        int column = (i_column - 1) ;
+        int row = ( i_row - 1);
+
+        for(int j = 0 ; j < 2 ; j++) {
+
+            for (int index = 0; index < 2; index++, runner++) {
+
+                if(isCordinateInRange(row) && isCordinateInRange(column + runner)) {
+                    if (!isMyCoordinate(row, column + runner, listOfGameToolCoordinates)
+                            && board[row][column + runner] != null) {
+                        return true;
+                    }
+                }
+            }
+            runner = 0 ;
+            row = row + 1;
+        }
+        return false ;
+
+    }
+
+    private boolean isGameToolArroundCoordinate(int i_row, int i_column, GameTool[][] board, LinkedList<Postion> listOfGameToolCoordinates ) {
 
         int runner = 0;
 
