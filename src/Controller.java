@@ -221,6 +221,7 @@ public class Controller extends Application  {
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(new Image("mine.png" , 50 ,50,false,false));
 
+
                 db.setContent(content);
 
                 mineImage.setImage(null);
@@ -481,10 +482,12 @@ public class Controller extends Application  {
     }
 
     private boolean badPostion(int row, int column) {
-        if(battleShipGame.getMineList().stream().filter(pos -> pos.getRow() == row && pos.getColumn() == column ).count() > 0){
+
+        return battleShipGame.canSetMine(row,column);
+       /* if(battleShipGame.getMineList().stream().filter(pos -> pos.getRow() == row && pos.getColumn() == column ).count() > 0){
             return true;
         }
-        return false ;
+        return false ;*/
     }
 
 

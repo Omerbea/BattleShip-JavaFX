@@ -188,6 +188,8 @@ public class GameManager {
         return true;
     }
 
+
+
     public boolean addMine (int row , int column) throws Exception {
 /*        if (!this.isGameRun){
             backToMainMenu("cannot add mine when no game run...");
@@ -230,7 +232,23 @@ public class GameManager {
                     }
 
         }
-        return true;
+        else {
+                return false;
+                }
+    }
+
+    public boolean canSetMine (int row, int column){
+        Mine mine = new Mine("Mine");
+        mine.setCoordinates(row,column);
+        try {
+            validator.canGameToolBePlaced(mine, players[whoPlay].myBoard);
+        }
+        catch (Exception e){
+            System.out.println("+-=-=-=-=-=--=-= return false");
+            return  false;
+        }
+        System.out.println("+-=-=-=-=-=--=-= return true");
+        return  true;
     }
     public   boolean quiteGame(){
         userInterface.printMassage("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");

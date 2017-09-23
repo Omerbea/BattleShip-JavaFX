@@ -61,7 +61,11 @@ public class Replay {
 
 
     public void setPlayerBoard(char[][] board) {
-        this.playerBoard = board;
+        char [][] newBoard = new char[board.length][];
+        for (int i =0 ; i < board.length; i++){
+            newBoard[i] = Arrays.copyOf(board[i], board[i].length);
+        }
+        this.playerBoard = newBoard;
     }
 
     public void setAvergeTimeTurn(String avergeTimeTurn) {

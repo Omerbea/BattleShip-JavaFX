@@ -28,7 +28,7 @@ public class Player {
         }
 
         public int getNumofMines() {
-            return numofMines;
+            return numofMines ;
         }
 
         public void setNumofMines(int numofMines) {
@@ -139,7 +139,7 @@ public class Player {
     }
 
     public int getNumOfMines (){
-        return this.playerStatistics.getNumofMines();
+        return this.playerStatistics.getNumofMines()- this.counterMine;
     }
 
     public void setNumOfMines(int num){
