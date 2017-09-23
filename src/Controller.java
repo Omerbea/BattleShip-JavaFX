@@ -412,7 +412,8 @@ public class Controller extends Application  {
             public void handle(DragEvent event) {
 
                 if(event.getGestureSource() != btn /*TODO : for another drag*/) {
-                    if (!badPostion(btn.getRow(), btn.getColumn())) {
+                    if (goodPostion(btn.getRow(), btn.getColumn())) {
+                        System.out.println("green");
                         btn.setStyle("    -fx-background-color:\n" +
                                 "        linear-gradient(#f0ff35, #a9ff00),\n" +
                                 "        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);\n" +
@@ -421,6 +422,16 @@ public class Controller extends Application  {
                                 "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
                                 "    -fx-text-fill: #395306;");
 
+                    }
+                    else{
+                        //TODO: omer
+                        btn.setStyle("    -fx-background-color:\n" +
+                                "        linear-gradient(#ff4861, #ff0716),\n" +
+                                "        radial-gradient(center 50% -40%, radius 200%, #ee5869 45%, #c80606 50%);\n" +
+                                "    -fx-background-radius: 6, 5;\n" +
+                                "    -fx-background-insets: 0, 1;\n" +
+                                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
+                                "    -fx-text-fill: #395306;");
                     }
                 }
                 event.consume();
@@ -475,7 +486,7 @@ public class Controller extends Application  {
 
     }
 
-    private boolean badPostion(int row, int column) {
+    private boolean goodPostion(int row, int column) {
 
         return battleShipGame.canSetMine(row,column);
        /* if(battleShipGame.getMineList().stream().filter(pos -> pos.getRow() == row && pos.getColumn() == column ).count() > 0){

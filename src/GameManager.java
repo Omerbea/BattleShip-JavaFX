@@ -224,7 +224,8 @@ public class GameManager {
                         replay.setRow(row);
                         replay.setColumn(column);
                         replay.setIsMine(true);
-                        this.replayTurns.add(replay);
+                        this.replayTurns.add(this.replayIndex,replay);
+                        replayIndex += 1;
                         return true;
                     }
                     else{
