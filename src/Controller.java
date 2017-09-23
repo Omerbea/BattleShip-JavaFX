@@ -1,6 +1,9 @@
 import com.sun.prism.paint.Color;
+import com.sun.xml.internal.bind.v2.model.annotation.RuntimeAnnotationReader;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -9,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -33,6 +37,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.scene.control.ProgressBar;
 
 public class Controller extends Application  {
 
@@ -567,37 +572,85 @@ public class Controller extends Application  {
 
         final FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(primaryStage);
-        //TODO: check that file is not null. when the user close the fileChooser without hes selected a file
+
+
         if(file != null) {
-            Runnable task = () -> {
-                System.out.println("Hello new thread");
-                //TODO : set progress bar here
-                /*ProgressBar p2 = new ProgressBar();
-                p2.setProgress(0.25F);*/
-
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    battleShipGame.isFileValid(file.getAbsolutePath());
-                } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-                    alert.showAndWait();
-                    System.out.println(e.getMessage());
-                }
-
-            };
-            Thread thread = new Thread(task);
-            thread.start();
-            thread.join();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please choose file");
-            alert.showAndWait();
+            LoadFile(file);
         }
-                //TODO: handle with successes
+
+    }
+
+    private void LoadFile(File file) {
+        final SimpleDoubleProperty prop = new SimpleDoubleProperty(0);
+        ProgressBar progress = new ProgressBar();
+        progress.progressProperty().bind(prop);
+        FlowPane root = new FlowPane();
+        root.setPadding(new Insets(10));
+        root.setHgap(10);
+        Label status = new Label("");
+        root.getChildren().addAll(progress , status);
+
+        Scene scene = new Scene(root, 300, 150);
+
+        primaryStage.setTitle("Parsing File");
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        new Thread(){
+            @Override
+            public void run(){
+                try {
+
+                    for(double i=0; i<=1; i+=0.1){
+                        prop.set(i);
+                        if(i==0.1) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    status.setText("Loading File");
+                                }
+                            });
+
+                        }
+                        if(i==0.5) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    status.setText("Parsing XML");
+                                }
+                            });
+
+                        }
+
+                        Thread.sleep(100);
+                    }
+
+                    try {
+                        battleShipGame.isFileValid(file.getAbsolutePath());
+                    } catch (Exception e) {
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                                alert.showAndWait();
+                            }
+                        });
+                    }
+
+                } catch (InterruptedException ex) {
+                    System.err.println("Error on Thread Sleep");
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        primaryStage.close();
+                    }
+                });
+
+            }
+
+        }.start();
 
     }
 
