@@ -448,6 +448,7 @@ public class Controller extends Application  {
         String result = battleShipGame.executeMove(column,row);
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
+        bindStatistics2Ui();
         this.drawRivalShips(null);
         if (result.contains("Win")){
             //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
@@ -456,6 +457,9 @@ public class Controller extends Application  {
             prevButton.setVisible(true);
 
             System.out.print("we have a winner!");
+        }
+        else if (result.contains("non")){
+            bindStatistics2Ui();
         }
     }
     @FXML
@@ -538,6 +542,7 @@ public class Controller extends Application  {
         //TODO: add mines to the bind
         rivalNumMines.setText("Mines: " + String.valueOf(turn.getRivalMines()));
     }
+    @FXML
     private void nextHandler(){
 
         Replay nextTurnReplay = this.battleShipGame.getNextReplayturn();
@@ -547,7 +552,10 @@ public class Controller extends Application  {
         //omer: update 2 board by nextTurnReplay obj
         fillBoardWithData(leftBoard,nextTurnReplay.getRivalBoard());
         fillBoardWithData(rightBoard , nextTurnReplay.getPlayerBoard());
+        updateStatisticsReplay(nextTurnReplay);
         //jonathan: update statistics by nextTurnReplay obj
+
+
     }
 
     private void updateRivalDetails(String ship){
