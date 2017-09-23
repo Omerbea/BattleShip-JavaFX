@@ -1,42 +1,29 @@
-import com.sun.prism.paint.Color;
-import com.sun.xml.internal.bind.v2.model.annotation.RuntimeAnnotationReader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import sun.text.normalizer.UCharacterProperty;
 
-import javax.naming.Binding;
-import java.io.DataOutput;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
+
 import javafx.scene.control.ProgressBar;
 
 public class Controller extends Application  {
@@ -133,6 +120,7 @@ public class Controller extends Application  {
 
 
         primaryStage.setTitle("Battleship Game");
+
         scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -198,6 +186,9 @@ public class Controller extends Application  {
                 drawUiBoard(rightBoard);
                 drawRivalShips(null);
                 //TODO: drag and drop mins
+                if(battleShipGame.getNumOfMinesCurrentPlayer() >0) {
+                    mineImage.setImage(new Image("mine.png"));
+                }
                 setDragAndDropMines();
                 mineImage.setVisible(true);
             }
@@ -223,7 +214,6 @@ public class Controller extends Application  {
 
                 db.setContent(content);
 
-                mineImage.setImage(null);
 
                 event.consume();
             }
@@ -457,6 +447,10 @@ public class Controller extends Application  {
                     try {
                         battleShipGame.addMine(btn.getColumn(), btn.getRow());
                         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
+                        if(battleShipGame.getNumOfMinesCurrentPlayer() <= 0) {
+
+                            mineImage.setImage(null);
+                        }
                     } catch (Exception e) {
                         System.out.println("problem with mine");
                     }
@@ -516,17 +510,18 @@ public class Controller extends Application  {
             // omer: update 2 board by prevTurnReplay boject
             fillBoardWithData(leftBoard, prevTurnReplay.getRivalBoard());
             fillBoardWithData(rightBoard, prevTurnReplay.getPlayerBoard());
-            paintMoveHigalight(prevTurnReplay.getRow(), prevTurnReplay.getColumn());
+            paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , leftBoard);
             updateStatisticsReplay(prevTurnReplay);
             // jonathan : update statistics by prevTurnReplay boject
         }
         else{
+            paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , rightBoard);
             //TODO: updateReplay set mine
         }
     }
 
-    private void paintMoveHigalight(int row, int column) {
-        for(Node node : leftBoard.getChildren()) {
+    private void paintMoveHigalight(int row, int column, GridPane board) {
+        for(Node node : board.getChildren()) {
             if(((extendedButton)node).getRow() == row && ((extendedButton)node).getColumn() == column) {
                 ((extendedButton)node).setStyle("    -fx-background-color:\n" +
                         "        linear-gradient(#72d, #72d),\n" +
@@ -616,6 +611,7 @@ public class Controller extends Application  {
         //omer: update 2 board by nextTurnReplay obj
         fillBoardWithData(leftBoard,nextTurnReplay.getRivalBoard());
         fillBoardWithData(rightBoard , nextTurnReplay.getPlayerBoard());
+        paintMoveHigalight( nextTurnReplay.getColumn() , nextTurnReplay.getRow(), leftBoard);
         updateStatisticsReplay(nextTurnReplay);
         //jonathan: update statistics by nextTurnReplay obj
 
