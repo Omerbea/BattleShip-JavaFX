@@ -845,6 +845,8 @@ public class Controller extends Application  {
             nextButton.setDisable(true);
         }
 
+
+        
     }
 
     private void updateRivalDetails(String ship){
