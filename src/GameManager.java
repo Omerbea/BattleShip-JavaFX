@@ -383,7 +383,7 @@ public class GameManager {
 
     public boolean isExisistNextTurn(){
         boolean res = true;
-        if (replayTurns.size() == (this.replayIndex - 1)){
+        if (replayTurns.size() <= (this.replayIndex - 1)){
             res=  false;
         }
         return  res;
@@ -400,14 +400,17 @@ public class GameManager {
             return  null;
         }
 
+
+        Replay res=  this.replayTurns.get(replayIndex);
         this.replayIndex += 1;
-        return this.replayTurns.get(replayIndex);
+        return  res;
     }
 
     private  boolean checkIfgGuessed(ArrayList<Integer> coordinates){
          return players[whoPlay].rivalBoard[coordinates.get(0)][ coordinates.get(1)] != 0;
     }
     private String executeByTypeTool (ArrayList<String> gameToolType , ArrayList<Integer> coordinates , int player, boolean mine) {
+        String res = new String();
         switch (gameToolType.get(0)) {
             case "non":
                 players[player].updateIMissMyTurn(coordinates.get(0), coordinates.get(1));
@@ -427,6 +430,7 @@ public class GameManager {
                 String msg = players[1-player].updateHitMe(coordinates , false);
                 int tmpScore =0;
                 if (msg.contains("destroyed")){
+                    res= "destroyed";
                     tmpScore = factory.getScoreByShipTypeId(gameToolType.get(1));
                     // update shipList
                     Map<String, LinkedList<GameTool>> gameTools = this.getGameTool(whoPlay);
@@ -446,7 +450,7 @@ public class GameManager {
                     return "Win";
                 }
                 backToMainMenu(msg);
-                return  gameToolType.get(2);
+                return res;
             case "Mine":
 
                 userInterface.printMassage( players[whoPlay].getName() +" You hit in Mine :/");
