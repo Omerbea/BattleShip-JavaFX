@@ -270,7 +270,19 @@ public class Controller extends Application  {
 
 
 
-                } else {
+                }
+
+                else if((LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]) == 'M') {
+                    ((extendedButton)node).setDisable(true);
+                    ImageView img = new ImageView("Mine.png");
+
+                    img.fitWidthProperty().bind(((extendedButton) node).widthProperty());
+                    img.fitHeightProperty().bind(((extendedButton) node).heightProperty());
+                    ((extendedButton)node).setGraphic(img);
+
+
+                }
+                else {
                     ((extendedButton) node).setText(Character.toString(LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]));
                     ((extendedButton) node).setStyle("");
                     ((extendedButton)node).setDisable(false);
@@ -520,7 +532,7 @@ public class Controller extends Application  {
         this.drawRivalShips(null);
         if (result.contains("Win")){
             //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
-
+            setMessageLabel("   " + battleShipGame.propWhoPlayProperty().getValue() +  " the Winner ! "  , true);
             nextButton.setVisible(true);
             prevButton.setVisible(true);
 
