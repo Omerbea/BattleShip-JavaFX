@@ -424,6 +424,7 @@ public class GameManager {
                 }
                 return "non";
             case "battleShip":
+                res= "hit";
                 if (mine){
                     userInterface.printMassage("player " + (player +1) + " you mine hit in a ship! wall done!");
                 }
