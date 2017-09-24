@@ -184,6 +184,8 @@ public class GameManager {
         this.isGameLoaded= false;
         userInterface.printMassage(("restart successfully!"));
         this.userInterface.printMenu(mainMenu,"middle");
+        this.replayTurns = new ArrayList<>();
+        replayIndex = 0;
 
         return true;
     }
@@ -367,6 +369,24 @@ public class GameManager {
         }
         this.replayIndex -=1;
         return this.replayTurns.get(this.replayIndex);
+    }
+
+    public boolean isExisistPrevTurn(){
+        boolean res = true;
+        if (this.replayTurns.size() == 0){
+            res = false;
+        }
+        return  res;
+
+
+    }
+
+    public boolean isExisistNextTurn(){
+        boolean res = true;
+        if (replayTurns.size() == (this.replayIndex - 1)){
+            res=  false;
+        }
+        return  res;
     }
 
     public Replay getNextReplayturn (){
