@@ -846,7 +846,7 @@ public class Controller extends Application  {
         }
 
 
-        
+
     }
 
     private void updateRivalDetails(String ship){
