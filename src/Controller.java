@@ -106,6 +106,31 @@ public class Controller extends Application  {
         errorLabel.setVisible(false);
         loadFileBtn.setDisable(false);
         restartGameBtn.setDisable(true);
+        new Thread(){
+            @Override
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMessageLabel("  Game restarted !" , true);
+
+                    }
+                });
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMessageLabel("" , true);
+
+                    }
+                });
+            }
+
+        }.start();
 
     }
 
@@ -597,6 +622,30 @@ public class Controller extends Application  {
 
                         }
                     });
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel(" Play another turn!" , true);
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("" , true);
+
+                        }
+                    });
 
                 }
 
@@ -613,6 +662,25 @@ public class Controller extends Application  {
                         @Override
                         public void run() {
                             setMessageLabel("  You Miss !" , true);
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("" , true);
+
+                        }
+                    });
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("   " + battleShipGame.propWhoPlayProperty().getValue() + " Play!" , true);
 
                         }
                     });
