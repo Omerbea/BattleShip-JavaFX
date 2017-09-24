@@ -35,7 +35,7 @@ public class Parser {
                     throw new Exception("File extension is not recognize.");
                 } else {
                     if(!file.getName().substring(dotIndex + 1).equals("xml")) {
-                        throw new Exception("File must be of format xml .");
+                        throw new Exception("File must be of format fxml .");
                     }
                 }
                 JAXBContext jaxbContext = JAXBContext.newInstance(BattleShipGame.class);
