@@ -525,6 +525,7 @@ public class Controller extends Application  {
 
 
     private void executeMoveHandler(int row, int column) {
+        setMessageLabel("" , true);
         String result = battleShipGame.executeMove(column,row);
         fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
         fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
@@ -539,8 +540,97 @@ public class Controller extends Application  {
 
             System.out.print("we have a winner!");
         }
+
+        else if(result.contains("destroyed")) {
+            new Thread(){
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("  BattleShip Destroyed!",true);
+
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("" , true);
+
+                        }
+                    });
+
+                }
+
+            }.start();
+        }
+        else if (result.contains("hit")){
+            bindStatistics2Ui();
+
+            new Thread(){
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("  You Hit !" , true);
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("" , true);
+
+                        }
+                    });
+
+                }
+
+            }.start();
+
+        }
         else if (result.contains("non")){
             bindStatistics2Ui();
+
+            new Thread(){
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("  You Miss !" , true);
+
+                        }
+                    });
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            setMessageLabel("" , true);
+
+                        }
+                    });
+
+                }
+
+            }.start();
+
         }
     }
     @FXML
