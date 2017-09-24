@@ -21,8 +21,8 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 25;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="loadFileBtn" mnemonicParsing="false" onMouseClicked="#loadFileHandler" text="Load File" />
-            <Button fx:id="startGameBtn" mnemonicParsing="false" onMouseClicked="#startGameHandler" text="Start Game" />
-            <Button fx:id="restartGameBtn" mnemonicParsing="false" onMouseClicked="#restartGameHandler" text="Restart" />
+            <Button fx:id="startGameBtn" mnemonicParsing="false" onMouseClicked="#startGameHandler" text="Start Game" disable="true" />
+            <Button fx:id="restartGameBtn" mnemonicParsing="false" onMouseClicked="#restartGameHandler" text="Restart" disable="true" />
             <Button fx:id="exitGameBtn" mnemonicParsing="false" onMouseClicked="#exitGameHandler" text="Exit" >
                <opaqueInsets>
                   <Insets />
@@ -114,7 +114,7 @@
                      <FlowPane alignment="CENTER">
 
                         <Button fx:id="prevButton" onMouseClicked="#prevHandler" visible="false">Prev</Button>
-                        <Button fx:id="nextButton" onMouseClicked="#nextHandler" visible="false">Next</Button>
+                        <Button fx:id="nextButton" onMouseClicked="#nextHandler" visible="false" disable="true">Next</Button>
 
                      </FlowPane>
                         <FlowPane>

@@ -373,7 +373,7 @@ public class GameManager {
 
     public boolean isExisistPrevTurn(){
         boolean res = true;
-        if (this.replayTurns.size() == 0){
+        if (this.replayIndex == 0){
             res = false;
         }
         return  res;

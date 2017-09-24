@@ -79,8 +79,7 @@ public class Controller extends Application  {
     @FXML
     public void restartGameHandler(){
         this.afterRestart = true;
-        errorLabel.setVisible(true);
-        errorLabel.textProperty().setValue("restarting.");
+
     //    errorLabel.setText("restarting.");
     //    errorLabel.setText("restarting..");
   //      errorLabel.setText("restarting...");
@@ -105,7 +104,7 @@ public class Controller extends Application  {
         }*/
         errorLabel.setText("");
         errorLabel.setVisible(false);
-        //TODO: restart UI
+        loadFileBtn.setDisable(false);
 
     }
 
@@ -185,6 +184,8 @@ public class Controller extends Application  {
     public void startGameHandler() throws IOException {
         try {
             if (battleShipGame.gameStart()) {
+                loadFileBtn.setDisable(true);
+                restartGameBtn.setDisable(false);
                 bindStatistics2Ui();
                 if (this.afterRestart) {
                     fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
@@ -552,10 +553,10 @@ public class Controller extends Application  {
         //check if we have anther prev turn to show
         if (! this.battleShipGame.isExisistPrevTurn()){
             //No!
-            //TODO: disable button
+            prevButton.setDisable(true);
 
         }
-        //TODO: set enabled next turn;
+        nextButton.setDisable(false);
     }
 
     private void paintMoveHigalight(int row, int column, GridPane board) {
@@ -654,12 +655,12 @@ public class Controller extends Application  {
             updateStatisticsReplay(nextTurnReplay);
             //jonathan: update statistics by nextTurnReplay obj
         }
-        //TODO: set enabled prev button
+        prevButton.setDisable(false);
 
         //check if we have anther next turn to show
         if (!this.battleShipGame.isExisistNextTurn()){
             //No!
-            //TODO: disabled next button
+            nextButton.setDisable(true);
         }
 
     }
