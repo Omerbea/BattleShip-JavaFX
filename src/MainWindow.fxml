@@ -86,7 +86,7 @@
                </font>
             </Label>
             <GridPane alignment="CENTER">
-                 <ImageView visible="false" fx:id="mineImage" fitHeight="50" fitWidth="50" onMouseDragged="#dragHandler" >
+                 <ImageView visible="false" fx:id="mineImage" fitHeight="50" fitWidth="50">
                  </ImageView>
             </GridPane>
          </children>
@@ -110,12 +110,18 @@
                     </columnConstraints>
                   </GridPane>
                   <VBox fx:id="middleBoard"  GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" spacing="10">
+                     <children>
                      <FlowPane alignment="CENTER">
 
                         <Button fx:id="prevButton" onMouseClicked="#prevHandler" visible="false">Prev</Button>
                         <Button fx:id="playButton" onMouseClicked="#nextHandler" visible="false">Next</Button>
 
                      </FlowPane>
+                        <FlowPane>
+                          <Label fx:id="meesegeLabel" visible="false" alignment="CENTER_RIGHT" prefWidth="130" prefHeight="300"></Label>
+                        </FlowPane>
+
+                     </children>
                      <FlowPane alignment="CENTER">
                         <Label fx:id="errorLabel" alignment="CENTER" prefHeight="15.0" prefWidth="250" text="" textAlignment="CENTER"/>
                      </FlowPane>

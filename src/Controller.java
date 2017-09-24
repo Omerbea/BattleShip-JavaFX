@@ -58,6 +58,7 @@ public class Controller extends Application  {
     @FXML GridPane leftBoard;
     @FXML GridPane rivalShipsGridPane;
     @FXML ImageView mineImage;
+    @FXML Label meesegeLabel;
     Label gameLoadedLabel;
     GameManager battleShipGame = new GameManager();
 /*    SimpleStringProperty propcurrentPlayerName = new SimpleStringProperty();
@@ -188,6 +189,7 @@ public class Controller extends Application  {
                 //TODO: drag and drop mins
                 if(battleShipGame.getNumOfMinesCurrentPlayer() >0) {
                     mineImage.setImage(new Image("mine.png"));
+
                 }
                 setDragAndDropMines();
                 mineImage.setVisible(true);
@@ -211,7 +213,6 @@ public class Controller extends Application  {
                 Dragboard db = mineImage.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(new Image("mine.png" , 50 ,50,false,false));
-
 
                 db.setContent(content);
 
@@ -346,8 +347,11 @@ public class Controller extends Application  {
 
 
     private void drawUiBoard(GridPane board) {
+        board.getColumnConstraints().clear();
+        board.getRowConstraints().clear();
         LinkedList<ColumnConstraints> columnConstraints = new LinkedList<>();
         //hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"
+
         for(int i = 0 ; i < battleShipGame.getBoardSize() ; i++) {
             columnConstraints.add(i , new ColumnConstraints(0.0,50.0,Double.MAX_VALUE,Priority.ALWAYS, HPos.LEFT,true));
         }
@@ -530,6 +534,7 @@ public class Controller extends Application  {
         }
         else{
             paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , rightBoard);
+            //fillBoardWithData(leftBoard , prevTurnReplay.getPlayerBoard());
             //TODO: updateReplay set mine
         }
     }
@@ -744,7 +749,13 @@ public class Controller extends Application  {
 
     }
 
-    public void dragHandler(MouseEvent mouseEvent) {
-
+    public void setMessageLabel(String message , boolean toShow) {
+        if(toShow) {
+            meesegeLabel.setText(message);
+            meesegeLabel.setVisible(true);
+        } else {
+            meesegeLabel.setVisible(false);
+        }
     }
+
 }
