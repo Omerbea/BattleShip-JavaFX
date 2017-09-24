@@ -309,6 +309,39 @@ public class Controller extends Application  {
 
 
                 }
+                else if ((LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]) == 'X' &&
+                        Board == leftBoard){
+                    String s = ((extendedButton)node).getText();
+                    ((extendedButton)node).setStyle("    -fx-background-color:\n" +
+                            "        linear-gradient(#6eff84, #b7ff72),\n" +
+                            "        radial-gradient(center 50% -40%, radius 200%, #acee7c 45%, #93c87e 50%);\n" +
+                            "    -fx-background-radius: 6, 5;\n" +
+                            "    -fx-background-insets: 0, 1;\n" +
+                            "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" );
+                    ((extendedButton)node).setText("X");
+                }
+                else if ((LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]) == '#' &&
+                        Board == rightBoard){
+                    String s = ((extendedButton)node).getText();
+                    ((extendedButton)node).setStyle("    -fx-background-color:\n" +
+                            "        linear-gradient(#8993ff, #8993ff),\n" +
+                            "        radial-gradient(center 50% -40%, radius 200%, #8993ff 45%, #8993ff 50%);\n" +
+                            "    -fx-background-radius: 6, 5;\n" +
+                            "    -fx-background-insets: 0, 1;\n" +
+                            "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" );
+                    ((extendedButton)node).setText("#");
+                }
+                else if ((LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]) == 'X' &&
+                        Board == rightBoard){
+                    String s = ((extendedButton)node).getText();
+                    ((extendedButton)node).setStyle("    -fx-background-color:\n" +
+                            "        linear-gradient(#252745, #3a406e),\n" +
+                            "        radial-gradient(center 50% -40%, radius 200%, #252745 45%, #252745 50%);\n" +
+                            "    -fx-background-radius: 6, 5;\n" +
+                            "    -fx-background-insets: 0, 1;\n" +
+                            "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" );
+                    ((extendedButton)node).setText("X");
+                }
                 else {
                     ((extendedButton) node).setText(Character.toString(LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]));
                     ((extendedButton) node).setStyle("");
