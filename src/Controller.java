@@ -533,8 +533,9 @@ public class Controller extends Application  {
             // jonathan : update statistics by prevTurnReplay boject
         }
         else{
+            fillBoardWithData(leftBoard , prevTurnReplay.getPlayerBoard());
+            unHighLight(leftBoard);
             paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , rightBoard);
-            //fillBoardWithData(leftBoard , prevTurnReplay.getPlayerBoard());
             //TODO: updateReplay set mine
         }
     }
@@ -542,13 +543,14 @@ public class Controller extends Application  {
     private void paintMoveHigalight(int row, int column, GridPane board) {
         for(Node node : board.getChildren()) {
             if(((extendedButton)node).getRow() == row && ((extendedButton)node).getColumn() == column) {
+                String s = ((extendedButton)node).getText();
                 ((extendedButton)node).setStyle("    -fx-background-color:\n" +
-                        "        linear-gradient(#72d, #72d),\n" +
-                        "        radial-gradient(center 50% -40%, radius 200%, #72d 45%, #72d 50%);\n" +
+                        "        linear-gradient(#9c73dd, #ac8bf3),\n" +
+                        "        radial-gradient(center 50% -40%, radius 200%, #9c73dd 45%, #9c73dd 50%);\n" +
                         "    -fx-background-radius: 6, 5;\n" +
                         "    -fx-background-insets: 0, 1;\n" +
-                        "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );\n" +
-                        "    -fx-text-fill: #72d;");
+                        "    -fx-text-fill: #000000;");
+                ((extendedButton)node).setText(s);
             }
         }
     }
@@ -756,6 +758,12 @@ public class Controller extends Application  {
         } else {
             meesegeLabel.setVisible(false);
         }
+    }
+
+    private void unHighLight(GridPane board) {
+            for(Node node : board.getChildren()) {
+                    ((extendedButton)node).setStyle("");
+            }
     }
 
 }
