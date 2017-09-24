@@ -105,6 +105,7 @@ public class Controller extends Application  {
         errorLabel.setText("");
         errorLabel.setVisible(false);
         loadFileBtn.setDisable(false);
+        restartGameBtn.setDisable(true);
 
     }
 
@@ -205,6 +206,7 @@ public class Controller extends Application  {
                 }
                 setDragAndDropMines();
                 mineImage.setVisible(true);
+                startGameBtn.setDisable(true);
             }
         }
         catch (Exception e){
@@ -558,7 +560,7 @@ public class Controller extends Application  {
                 updateStatisticsReplay(prevTurnReplay);
                 // jonathan : update statistics by prevTurnReplay boject
             } else {
-                fillBoardWithData(leftBoard , prevTurnReplay.getPlayerBoard());
+                //fillBoardWithData(leftBoard , prevTurnReplay.getPlayerBoard());
                 unHighLight(leftBoard);
                 paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , rightBoard);
                 //TODO: updateReplay set mine
@@ -664,12 +666,18 @@ public class Controller extends Application  {
             //we don't have anymore next turn
         }
         else {
-            //omer: update 2 board by nextTurnReplay obj
-            fillBoardWithData(leftBoard, nextTurnReplay.getRivalBoard());
-            fillBoardWithData(rightBoard, nextTurnReplay.getPlayerBoard());
-            paintMoveHigalight(nextTurnReplay.getColumn(), nextTurnReplay.getRow(), leftBoard);
-            updateStatisticsReplay(nextTurnReplay);
-            //jonathan: update statistics by nextTurnReplay obj
+            if (nextTurnReplay.getIsMine() == false) {
+                //omer: update 2 board by nextTurnReplay obj
+                fillBoardWithData(leftBoard, nextTurnReplay.getRivalBoard());
+                fillBoardWithData(rightBoard, nextTurnReplay.getPlayerBoard());
+                paintMoveHigalight(nextTurnReplay.getColumn(), nextTurnReplay.getRow(), leftBoard);
+                updateStatisticsReplay(nextTurnReplay);
+                //jonathan: update statistics by nextTurnReplay obj
+            }
+            else{
+                unHighLight(leftBoard);
+                paintMoveHigalight(nextTurnReplay.getColumn(),nextTurnReplay.getRow(), rightBoard);
+            }
         }
         prevButton.setDisable(false);
 
@@ -699,7 +707,9 @@ public class Controller extends Application  {
         } catch (Exception e) {
 
         }*/
-        if (this.battleShipGame.getIsGameLoaded() == false) {
+
+
+     //   if (this.battleShipGame.getIsGameLoaded() == false) {
             gameLoadedLabel = new Label();
 
             final FileChooser fileChooser = new FileChooser();
@@ -710,13 +720,13 @@ public class Controller extends Application  {
                 LoadFile(file);
                 startGameBtn.setDisable(false);
             }
-        }
-        else{
+     //   }
+       /* else{
             Alert alert = new Alert(Alert.AlertType.WARNING ,  "game already run...you have to restart game for load a new game ");
             alert.setTitle("BattleShip Game");
             alert.setHeaderText("Can not perform this task");
             alert.showAndWait();
-        }
+        }*/
 
     }
 

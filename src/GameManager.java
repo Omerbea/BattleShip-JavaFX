@@ -383,7 +383,7 @@ public class GameManager {
 
     public boolean isExisistNextTurn(){
         boolean res = true;
-        if (replayTurns.size() <= (this.replayIndex - 1)){
+        if (replayTurns.size() <= (this.replayIndex + 1)){
             res=  false;
         }
         return  res;
@@ -396,13 +396,13 @@ public class GameManager {
         }
 
         // check if we didnt have next turn to show
-        if (replayTurns.size() == (this.replayIndex - 1)){
+        if (replayTurns.size() == (this.replayIndex + 1)){
             return  null;
         }
 
-
-        Replay res=  this.replayTurns.get(replayIndex);
         this.replayIndex += 1;
+        Replay res=  this.replayTurns.get(replayIndex);
+
         return  res;
     }
 
