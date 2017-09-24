@@ -52,7 +52,7 @@ public class Controller extends Application  {
     @FXML Label rivalNumOfmissLabel ;
     @FXML Label rivalAverageTimeTurnLabel ;
     @FXML Label rivalNumOfTurnsLabel ;
-    @FXML Button playButton;
+    @FXML Button nextButton;
     @FXML Button prevButton;
     @FXML GridPane rightBoard;
     @FXML GridPane leftBoard;
@@ -71,13 +71,14 @@ public class Controller extends Application  {
     int whoPlay =0;
     extendedButton [][]player1Board;
     extendedButton [][]player2Board;
-
+    boolean afterRestart = false;
     public static void main(String[] args) {
         launch(args);
     }
 
     @FXML
     public void restartGameHandler(){
+        this.afterRestart = true;
         errorLabel.setVisible(true);
         errorLabel.textProperty().setValue("restarting.");
     //    errorLabel.setText("restarting.");
@@ -93,6 +94,8 @@ public class Controller extends Application  {
         //leftBoard.getChildren().clear();
         rightStatistics.setVisible(false);
         rivalStatistics.setVisible(false);
+        prevButton.setVisible(false);
+        nextButton.setVisible(false);
         //rivalShipsGridPane.getChildren().clear();
        /* try {
             startGameHandler();
@@ -183,8 +186,16 @@ public class Controller extends Application  {
         try {
             if (battleShipGame.gameStart()) {
                 bindStatistics2Ui();
-                drawUiBoard(leftBoard);
-                drawUiBoard(rightBoard);
+                if (this.afterRestart) {
+                    fillBoardWithData(rightBoard , battleShipGame.getCurrentPlayerBoard());
+                    fillBoardWithData(leftBoard , battleShipGame.getRivalBoard());
+                    leftBoard.setVisible(true);
+                    rightBoard.setVisible(true);
+                }
+                else{
+                    drawUiBoard(leftBoard);
+                    drawUiBoard(rightBoard);
+                }
                 drawRivalShips(null);
                 //TODO: drag and drop mins
                 if(battleShipGame.getNumOfMinesCurrentPlayer() >0) {
@@ -509,8 +520,9 @@ public class Controller extends Application  {
         if (result.contains("Win")){
             //omer: show button prev and next and connect click event to prevHandler() and nextHandler() that already exist!
 
-            playButton.setVisible(true);
+            nextButton.setVisible(true);
             prevButton.setVisible(true);
+
 
             System.out.print("we have a winner!");
         }
@@ -524,20 +536,29 @@ public class Controller extends Application  {
         if (prevTurnReplay == null){
             // we don't have anymore prev turn
         }
-        if (prevTurnReplay.getIsMine() == false) {
-            // omer: update 2 board by prevTurnReplay boject
-            fillBoardWithData(leftBoard, prevTurnReplay.getRivalBoard());
-            fillBoardWithData(rightBoard, prevTurnReplay.getPlayerBoard());
-            paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , leftBoard);
-            updateStatisticsReplay(prevTurnReplay);
-            // jonathan : update statistics by prevTurnReplay boject
+        else {
+            if (prevTurnReplay.getIsMine() == false) {
+                // omer: update 2 board by prevTurnReplay boject
+                fillBoardWithData(leftBoard, prevTurnReplay.getRivalBoard());
+                fillBoardWithData(rightBoard, prevTurnReplay.getPlayerBoard());
+                paintMoveHigalight(prevTurnReplay.getColumn(), prevTurnReplay.getRow(), leftBoard);
+                updateStatisticsReplay(prevTurnReplay);
+                // jonathan : update statistics by prevTurnReplay boject
+            } else {
+                fillBoardWithData(leftBoard , prevTurnReplay.getPlayerBoard());
+                unHighLight(leftBoard);
+                paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , rightBoard);
+                //TODO: updateReplay set mine
+
+            }
         }
-        else{
-            fillBoardWithData(leftBoard , prevTurnReplay.getPlayerBoard());
-            unHighLight(leftBoard);
-            paintMoveHigalight( prevTurnReplay.getColumn() , prevTurnReplay.getRow() , rightBoard);
-            //TODO: updateReplay set mine
+        //check if we have anther prev turn to show
+        if (! this.battleShipGame.isExisistPrevTurn()){
+            //No!
+            //TODO: disable button
+
         }
+        //TODO: set enabled next turn;
     }
 
     private void paintMoveHigalight(int row, int column, GridPane board) {
@@ -629,13 +650,21 @@ public class Controller extends Application  {
         if (nextTurnReplay == null){
             //we don't have anymore next turn
         }
-        //omer: update 2 board by nextTurnReplay obj
-        fillBoardWithData(leftBoard,nextTurnReplay.getRivalBoard());
-        fillBoardWithData(rightBoard , nextTurnReplay.getPlayerBoard());
-        paintMoveHigalight( nextTurnReplay.getColumn() , nextTurnReplay.getRow(), leftBoard);
-        updateStatisticsReplay(nextTurnReplay);
-        //jonathan: update statistics by nextTurnReplay obj
+        else {
+            //omer: update 2 board by nextTurnReplay obj
+            fillBoardWithData(leftBoard, nextTurnReplay.getRivalBoard());
+            fillBoardWithData(rightBoard, nextTurnReplay.getPlayerBoard());
+            paintMoveHigalight(nextTurnReplay.getColumn(), nextTurnReplay.getRow(), leftBoard);
+            updateStatisticsReplay(nextTurnReplay);
+            //jonathan: update statistics by nextTurnReplay obj
+        }
+        //TODO: set enabled prev button
 
+        //check if we have anther next turn to show
+        if (!this.battleShipGame.isExisistNextTurn()){
+            //No!
+            //TODO: disabled next button
+        }
 
     }
 
@@ -666,6 +695,7 @@ public class Controller extends Application  {
 
             if (file != null) {
                 LoadFile(file);
+                startGameBtn.setDisable(false);
             }
         }
         else{
