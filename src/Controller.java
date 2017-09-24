@@ -301,11 +301,11 @@ public class Controller extends Application  {
 
                 else if((LogicBoard[Board.getRowIndex(node)][Board.getColumnIndex(node)]) == 'M') {
                     ((extendedButton)node).setDisable(true);
-                    ImageView img = new ImageView("Mine.png");
+                    /*ImageView img = new ImageView("Mine.png");
 
                     img.fitWidthProperty().bind(((extendedButton) node).widthProperty());
-                    img.fitHeightProperty().bind(((extendedButton) node).heightProperty());
-                    ((extendedButton)node).setGraphic(img);
+                    img.fitHeightProperty().bind(((extendedButton) node).heightProperty());*/
+                    ((extendedButton)node).setText("M");
 
 
                 }
@@ -943,6 +943,8 @@ public class Controller extends Application  {
                             @Override
                             public void run() {
                                 Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                                alert.setTitle("BattleShip Game");
+                                alert.setHeaderText("Error loading FXML file.");
                                 alert.showAndWait();
                             }
                         });
